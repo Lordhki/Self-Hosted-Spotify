@@ -1,4 +1,5 @@
-body {
-    margin: 0;
-    font-family: sans-serif;
-}
+
+const APP_CONFIG = {
+    name: "Self-Hosted Spotif",
+    logo: "🎵"
+};
