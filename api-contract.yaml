@@ -1,0 +1,301 @@
+openapi: 3.1.0
+info:
+  title: Self-Hosted Spotify API
+  version: 1.0.0
+  description: Contract for playlist browsing and local playback control.
+servers:
+  - url: /api/v1
+paths:
+  /playlists:
+    get:
+      operationId: listPlaylists
+      summary: List available playlists
+      tags: [Playlists]
+      responses:
+        "200":
+          description: Playlists available to the current user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaylistCollection"
+        default:
+          $ref: "#/components/responses/Problem"
+
+  /playlists/{playlistId}/tracks:
+    get:
+      operationId: listPlaylistTracks
+      summary: List tracks in a playlist
+      tags: [Playlists]
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tracks in playlist order.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrackCollection"
+        "404":
+          $ref: "#/components/responses/Problem"
+        default:
+          $ref: "#/components/responses/Problem"
+
+  /playback:
+    get:
+      operationId: getPlaybackState
+      summary: Get current playback state
+      tags: [Playback]
+      responses:
+        "200":
+          description: Current local playback state.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaybackState"
+        default:
+          $ref: "#/components/responses/Problem"
+
+  /playback/commands:
+    post:
+      operationId: sendPlaybackCommand
+      summary: Control local playback
+      tags: [Playback]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaybackCommand"
+      responses:
+        "200":
+          description: Playback state after applying the command.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaybackState"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        default:
+          $ref: "#/components/responses/Problem"
+
+  /playback/volume:
+    put:
+      operationId: setPlaybackVolume
+      summary: Set local playback volume
+      tags: [Playback]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [volume]
+              properties:
+                volume:
+                  type: integer
+                  minimum: 0
+                  maximum: 100
+      responses:
+        "200":
+          description: Playback state after updating volume.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaybackState"
+        "400":
+          $ref: "#/components/responses/Problem"
+        default:
+          $ref: "#/components/responses/Problem"
+
+components:
+  schemas:
+    PlaylistCollection:
+      type: object
+      additionalProperties: false
+      required: [items, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Playlist"
+        total:
+          type: integer
+          minimum: 0
+
+    Playlist:
+      type: object
+      additionalProperties: false
+      required: [id, name, trackCount, durationSeconds]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        trackCount:
+          type: integer
+          minimum: 0
+        durationSeconds:
+          type: integer
+          minimum: 0
+        artworkUrl:
+          type: [string, "null"]
+          format: uri
+
+    TrackCollection:
+      type: object
+      additionalProperties: false
+      required: [items, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Track"
+        total:
+          type: integer
+          minimum: 0
+
+    Track:
+      type: object
+      additionalProperties: false
+      required: [id, title, artist, durationSeconds, position]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        artist:
+          type: string
+        album:
+          type: [string, "null"]
+        durationSeconds:
+          type: integer
+          minimum: 0
+        position:
+          type: integer
+          minimum: 0
+        artworkUrl:
+          type: [string, "null"]
+          format: uri
+
+    PlaybackState:
+      type: object
+      additionalProperties: false
+      required:
+        [
+          status,
+          currentTrack,
+          positionSeconds,
+          durationSeconds,
+          volume,
+          shuffle,
+          repeatMode
+        ]
+      properties:
+        status:
+          type: string
+          enum: [idle, playing, paused]
+        currentTrack:
+          oneOf:
+            - $ref: "#/components/schemas/Track"
+            - type: "null"
+        positionSeconds:
+          type: number
+          minimum: 0
+        durationSeconds:
+          type: [integer, "null"]
+          minimum: 0
+        volume:
+          type: integer
+          minimum: 0
+          maximum: 100
+        shuffle:
+          type: boolean
+        repeatMode:
+          type: string
+          enum: [off, one, all]
+
+    PlaybackCommand:
+      oneOf:
+        - type: object
+          additionalProperties: false
+          required: [action]
+          properties:
+            action:
+              const: play
+        - type: object
+          additionalProperties: false
+          required: [action]
+          properties:
+            action:
+              const: pause
+        - type: object
+          additionalProperties: false
+          required: [action]
+          properties:
+            action:
+              const: next
+        - type: object
+          additionalProperties: false
+          required: [action]
+          properties:
+            action:
+              const: previous
+        - type: object
+          additionalProperties: false
+          required: [action, positionSeconds]
+          properties:
+            action:
+              const: seek
+            positionSeconds:
+              type: number
+              minimum: 0
+        - type: object
+          additionalProperties: false
+          required: [action, shuffle]
+          properties:
+            action:
+              const: setShuffle
+            shuffle:
+              type: boolean
+        - type: object
+          additionalProperties: false
+          required: [action, repeatMode]
+          properties:
+            action:
+              const: setRepeatMode
+            repeatMode:
+              type: string
+              enum: [off, one, all]
+
+    Problem:
+      type: object
+      additionalProperties: true
+      required: [title, status]
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri-reference
+
+  responses:
+    Problem:
+      description: The request could not be completed.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
