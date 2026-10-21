@@ -2,7 +2,12 @@ openapi: 3.1.0
 info:
   title: Self-Hosted Spotify API
   version: 1.0.0
-  description: Contract for playlist browsing and local playback control.
+  description: >-
+    The frontend owns the audio player and transient playback state. This API
+    provides playlist and track metadata and resolves track IDs to audio bytes.
+    The initial audio implementation serves local files. The browser's native
+    audio player handles play, pause, seeking, volume, buffering, shuffle,
+    repeat, and queue behavior.
 servers:
   - url: /api/v1
 paths:
@@ -44,73 +49,74 @@ paths:
         default:
           $ref: "#/components/responses/Problem"
 
-  /playback:
+  /tracks/{trackId}/audio:
     get:
-      operationId: getPlaybackState
-      summary: Get current playback state
-      tags: [Playback]
+      operationId: getTrackAudio
+      summary: Get track audio
+      description: >-
+        Returns the audio for a track ID. The server resolves the track ID to
+        its current audio source internally; clients must not provide file
+        paths. This predictable URL can be used as the browser audio player's
+        source and may be served by a separate media host in the future.
+      tags: [Tracks]
+      parameters:
+        - name: trackId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Range
+          in: header
+          required: false
+          description: HTTP byte range requested by the browser for seeking.
+          schema:
+            type: string
       responses:
         "200":
-          description: Current local playback state.
-          content:
-            application/json:
+          description: The complete audio representation as bytes.
+          headers:
+            Accept-Ranges:
+              description: Indicates support for byte-range requests.
               schema:
-                $ref: "#/components/schemas/PlaybackState"
-        default:
-          $ref: "#/components/responses/Problem"
-
-  /playback/commands:
-    post:
-      operationId: sendPlaybackCommand
-      summary: Control local playback
-      tags: [Playback]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PlaybackCommand"
-      responses:
-        "200":
-          description: Playback state after applying the command.
+                type: string
+                example: bytes
           content:
-            application/json:
+            audio/*:
               schema:
-                $ref: "#/components/schemas/PlaybackState"
-        "400":
-          $ref: "#/components/responses/Problem"
+                type: string
+                format: binary
+        "206":
+          description: The requested partial audio representation as bytes.
+          headers:
+            Accept-Ranges:
+              description: Indicates support for byte-range requests.
+              schema:
+                type: string
+                example: bytes
+            Content-Range:
+              description: Byte range returned and total representation size.
+              schema:
+                type: string
+                example: bytes 0-1023/2048
+          content:
+            audio/*:
+              schema:
+                type: string
+                format: binary
         "404":
           $ref: "#/components/responses/Problem"
-        default:
-          $ref: "#/components/responses/Problem"
-
-  /playback/volume:
-    put:
-      operationId: setPlaybackVolume
-      summary: Set local playback volume
-      tags: [Playback]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              additionalProperties: false
-              required: [volume]
-              properties:
-                volume:
-                  type: integer
-                  minimum: 0
-                  maximum: 100
-      responses:
-        "200":
-          description: Playback state after updating volume.
-          content:
-            application/json:
+        "416":
+          description: The requested byte range cannot be satisfied.
+          headers:
+            Content-Range:
+              description: Total representation size for an unsatisfiable range.
               schema:
-                $ref: "#/components/schemas/PlaybackState"
-        "400":
-          $ref: "#/components/responses/Problem"
+                type: string
+                example: bytes */2048
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
         default:
           $ref: "#/components/responses/Problem"
 
@@ -183,96 +189,6 @@ components:
         artworkUrl:
           type: [string, "null"]
           format: uri
-
-    PlaybackState:
-      type: object
-      additionalProperties: false
-      required:
-        [
-          status,
-          currentTrack,
-          positionSeconds,
-          durationSeconds,
-          volume,
-          shuffle,
-          repeatMode
-        ]
-      properties:
-        status:
-          type: string
-          enum: [idle, playing, paused]
-        currentTrack:
-          oneOf:
-            - $ref: "#/components/schemas/Track"
-            - type: "null"
-        positionSeconds:
-          type: number
-          minimum: 0
-        durationSeconds:
-          type: [integer, "null"]
-          minimum: 0
-        volume:
-          type: integer
-          minimum: 0
-          maximum: 100
-        shuffle:
-          type: boolean
-        repeatMode:
-          type: string
-          enum: [off, one, all]
-
-    PlaybackCommand:
-      oneOf:
-        - type: object
-          additionalProperties: false
-          required: [action]
-          properties:
-            action:
-              const: play
-        - type: object
-          additionalProperties: false
-          required: [action]
-          properties:
-            action:
-              const: pause
-        - type: object
-          additionalProperties: false
-          required: [action]
-          properties:
-            action:
-              const: next
-        - type: object
-          additionalProperties: false
-          required: [action]
-          properties:
-            action:
-              const: previous
-        - type: object
-          additionalProperties: false
-          required: [action, positionSeconds]
-          properties:
-            action:
-              const: seek
-            positionSeconds:
-              type: number
-              minimum: 0
-        - type: object
-          additionalProperties: false
-          required: [action, shuffle]
-          properties:
-            action:
-              const: setShuffle
-            shuffle:
-              type: boolean
-        - type: object
-          additionalProperties: false
-          required: [action, repeatMode]
-          properties:
-            action:
-              const: setRepeatMode
-            repeatMode:
-              type: string
-              enum: [off, one, all]
 
     Problem:
       type: object

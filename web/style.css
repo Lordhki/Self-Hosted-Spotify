@@ -1276,10 +1276,6 @@ body.listening-page::before {
   pointer-events: none;
 }
 
-body.listening-page > .lr-stars {
-  display: none;
-}
-
 .lr-app.sidebar-collapsed {
   grid-template-columns: 0 minmax(0, 1fr);
 }
