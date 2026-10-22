@@ -1,7 +1,0 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="98" height="12" viewBox="0 0 98 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Volume slider">
-<rect id="Volume track" y="4.5" width="98" height="3" rx="1.5" fill="#2A4134"/>
-<rect id="Volume level" y="4.5" width="68" height="3" rx="1.5" fill="#A9B8A7"/>
-<circle id="Volume handle" cx="68.5" cy="6" r="3.5" fill="#F2EFDF"/>
-</g>
-</svg>

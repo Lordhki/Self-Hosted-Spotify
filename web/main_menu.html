@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="lowave-page listening-page">
-    <div class="lr-background-artwork" aria-hidden="true"></div>
-    <div class="lr-app">
-      <aside class="lr-sidebar" aria-label="Playlist library">
-        <a class="lr-brand" href="#home" aria-label="lowave home">
-          <span class="lr-brand-mark"
+    <div class="background-artwork" aria-hidden="true"></div>
+    <div class="app">
+      <aside class="sidebar" aria-label="Playlist library">
+        <a class="brand" href="#home" aria-label="lowave home">
+          <span class="brand-mark"
             ><svg
               width="23"
               height="23"
@@ -30,13 +30,13 @@
                 stroke="#0B1324"
               /></svg
           ></span>
-          <span class="lr-brand-name">lowave</span>
+          <span class="brand-name">lowave</span>
         </a>
-        <section class="lr-library-tools" aria-label="Playlist tools">
-          <div class="lr-section-heading">
+        <section class="library-tools" aria-label="Playlist tools">
+          <div class="section-heading">
             <span>YOUR COLLECTION</span>
             <button
-              class="lr-icon-button"
+              class="icon-button"
               type="button"
               aria-label="Create playlist"
               title="Create playlist"
@@ -60,7 +60,7 @@
             </button>
           </div>
           <button
-            class="lr-playlist-select"
+            class="playlist-select"
             type="button"
             aria-label="Select playlist"
           >
@@ -82,7 +82,7 @@
             </svg>
             <span><strong>Select a playlist</strong><small></small></span>
             <svg
-              class="lr-chevron"
+              class="chevron"
               width="16"
               height="16"
               viewBox="0 0 16 16"
@@ -99,7 +99,7 @@
               />
             </svg>
           </button>
-          <label class="lr-search">
+          <label class="search">
             <svg
               width="16"
               height="16"
@@ -123,13 +123,9 @@
             />
           </label>
         </section>
-        <div class="lr-track-heading">
+        <div class="track-heading">
           <span>In this playlist</span>
-          <button
-            class="lr-sort-label"
-            type="button"
-            title="Change track order"
-          >
+          <button class="sort-label" type="button" title="Change track order">
             <svg
               width="12"
               height="12"
@@ -149,11 +145,11 @@
           </button>
         </div>
         <ul
-          class="lr-track-list"
+          class="track-list"
           id="playlistContainer"
           aria-label="Playlist tracks"
         ></ul>
-        <footer class="lr-sidebar-footer">
+        <footer class="sidebar-footer">
           <a href="#settings"
             ><svg
               width="17"
@@ -176,10 +172,10 @@
         </footer>
       </aside>
 
-      <main class="lr-main" id="home">
-        <section class="lr-listening-space" aria-label="Listening room">
-          <header class="lr-header">
-            <div class="lr-breadcrumb">
+      <main class="main" id="home">
+        <section class="listening-space" aria-label="Listening room">
+          <header class="header">
+            <div class="breadcrumb">
               <span>Library</span>
               <svg
                 width="13"
@@ -199,8 +195,8 @@
               </svg>
               <strong>Listening room</strong>
             </div>
-            <div class="lr-session-actions">
-              <span class="lr-session-status"
+            <div class="session-actions">
+              <span class="session-status"
                 ><svg
                   width="5"
                   height="5"
@@ -213,19 +209,19 @@
                   <circle cx="2.5" cy="2.5" r="2.5" fill="#BDDA91" /></svg
                 >A LITTLE ROOM TO UNWIND</span
               >
-              <span class="lr-header-divider"></span>
+              <span class="header-divider"></span>
               <button
-                class="lr-theme-toggle"
+                class="theme-toggle"
                 id="theme-toggle"
                 type="button"
                 aria-label="Change theme"
                 title="Change theme"
               >
                 <span aria-hidden="true">✦</span>
-                <span class="lr-theme-label" data-theme-label>Theme</span>
+                <span class="theme-label" data-theme-label>Theme</span>
               </button>
               <button
-                class="lr-icon-button"
+                class="icon-button"
                 type="button"
                 title="Toggle playlist sidebar"
                 aria-label="Toggle playlist sidebar"
@@ -250,9 +246,9 @@
             </div>
           </header>
 
-          <div class="lr-room-content">
-            <div class="lr-room-toolbar">
-              <div class="lr-room-title">
+          <div class="room-content">
+            <div class="room-toolbar">
+              <div class="room-title">
                 <svg
                   width="16"
                   height="16"
@@ -272,13 +268,13 @@
                 <strong>Listening room</strong>
               </div>
               <div
-                class="lr-display-modes"
+                class="display-modes"
                 role="radiogroup"
                 aria-label="Display mode"
               >
-                <label class="lr-mode">
+                <label class="mode">
                   <input
-                    class="lr-mode-input"
+                    class="mode-input"
                     type="radio"
                     id="mode-video"
                     name="display-mode"
@@ -286,9 +282,9 @@
                   />
                   <span>Video</span>
                 </label>
-                <label class="lr-mode">
+                <label class="mode">
                   <input
-                    class="lr-mode-input"
+                    class="mode-input"
                     type="radio"
                     id="mode-lyrics"
                     name="display-mode"
@@ -296,7 +292,7 @@
                   <span>Lyrics</span>
                 </label>
                 <button
-                  class="lr-icon-button"
+                  class="icon-button"
                   type="button"
                   title="More display options"
                   aria-label="More display options"
@@ -321,26 +317,26 @@
               </div>
             </div>
 
-            <div class="lr-display-stage">
+            <div class="display-stage">
               <section
-                class="lr-lyric-canvas lr-display-panel lr-video-panel"
+                class="lyric-canvas display-panel video-panel"
                 aria-label="Video display"
               ></section>
               <section
-                class="lr-lyric-canvas lr-display-panel lr-lyrics-panel"
+                class="lyric-canvas display-panel lyrics-panel"
                 aria-label="Lyrics display"
               ></section>
             </div>
           </div>
         </section>
 
-        <section class="lr-playback" aria-label="Playback">
-          <div class="lr-now-playing" id="nowPlayingContainer">
-            <div class="lr-current-track">
-              <div class="lr-current-art" aria-hidden="true"></div>
-              <div class="lr-track-metadata" id="currentTrackMetadata"></div>
+        <section class="playback" aria-label="Playback">
+          <div class="now-playing" id="nowPlayingContainer">
+            <div class="current-track">
+              <div class="current-art" aria-hidden="true"></div>
+              <div class="track-metadata" id="currentTrackMetadata"></div>
               <button
-                class="lr-heart-button"
+                class="heart-button"
                 type="button"
                 aria-label="Add to favorites"
                 title="Add to favorites"
@@ -363,8 +359,8 @@
                 </svg>
               </button>
             </div>
-            <div class="lr-track-actions">
-              <button class="lr-text-action" type="button">
+            <div class="track-actions">
+              <button class="text-action" type="button">
                 <svg
                   width="14"
                   height="14"
@@ -383,7 +379,7 @@
                 >Edit metadata
               </button>
               <button
-                class="lr-icon-button"
+                class="icon-button"
                 type="button"
                 title="More track options"
                 aria-label="More track options"
@@ -408,14 +404,14 @@
             </div>
           </div>
           <div
-            class="lr-timeline"
+            class="timeline"
             id="timelineContainer"
             aria-label="Track timeline"
           >
-            <div class="lr-range-wrap">
-              <div class="lr-range-fill"></div>
+            <div class="range-wrap">
+              <div class="range-fill"></div>
               <svg
-                class="lr-playhead"
+                class="playhead"
                 width="10"
                 height="10"
                 viewBox="0 0 10 10"
@@ -434,12 +430,12 @@
                 aria-label="Track position"
               />
             </div>
-            <div class="lr-time-labels"><span></span><span></span></div>
+            <div class="time-labels"><span></span><span></span></div>
           </div>
-          <div class="lr-control-row" id="playbackControlsContainer">
-            <div class="lr-volume-control">
+          <div class="control-row" id="playbackControlsContainer">
+            <div class="volume-control">
               <svg
-                class="lr-volume-icon"
+                class="volume-icon"
                 width="19"
                 height="19"
                 viewBox="0 0 19 19"
@@ -455,7 +451,7 @@
                   stroke="#A9B8A7"
                 />
               </svg>
-              <div class="lr-volume-slider">
+              <div class="volume-slider">
                 <svg
                   width="98"
                   height="12"
@@ -473,13 +469,9 @@
               </div>
               <span></span>
             </div>
-            <div
-              class="lr-transport"
-              role="group"
-              aria-label="Playback controls"
-            >
+            <div class="transport" role="group" aria-label="Playback controls">
               <button
-                class="lr-icon-button lr-shuffle"
+                class="icon-button shuffle"
                 type="button"
                 aria-label="Shuffle"
                 title="Shuffle"
@@ -502,7 +494,7 @@
                 </svg>
               </button>
               <button
-                class="lr-icon-button"
+                class="icon-button"
                 type="button"
                 aria-label="Previous track"
                 title="Previous track"
@@ -525,13 +517,13 @@
                 </svg>
               </button>
               <button
-                class="lr-play-button is-paused"
+                class="play-button is-paused"
                 type="button"
                 aria-label="Play"
                 title="Play"
               ></button>
               <button
-                class="lr-icon-button"
+                class="icon-button"
                 type="button"
                 aria-label="Next track"
                 title="Next track"
@@ -554,7 +546,7 @@
                 </svg>
               </button>
               <button
-                class="lr-icon-button"
+                class="icon-button"
                 type="button"
                 aria-label="Repeat"
                 title="Repeat"
@@ -577,8 +569,8 @@
                 </svg>
               </button>
             </div>
-            <div class="lr-listening-tools">
-              <button class="lr-karaoke" type="button">
+            <div class="listening-tools">
+              <button class="karaoke" type="button">
                 <svg
                   width="15"
                   height="15"
@@ -597,7 +589,7 @@
                 >Karaoke
               </button>
               <button
-                class="lr-icon-button"
+                class="icon-button"
                 type="button"
                 title="Queue"
                 aria-label="Queue"
@@ -621,8 +613,8 @@
               </button>
             </div>
           </div>
-          <footer class="lr-playback-footer" id="playbackStatusContainer">
-            <span class="lr-quality"
+          <footer class="playback-footer" id="playbackStatusContainer">
+            <span class="quality"
               ><svg
                 width="12"
                 height="12"
@@ -640,7 +632,7 @@
                 /></svg
               ><span></span
             ></span>
-            <span class="lr-up-next"
+            <span class="up-next"
               >Up next <strong></strong
               ><svg
                 width="12"
@@ -663,6 +655,7 @@
         </section>
       </main>
     </div>
-    <script src="theme.js" defer></script>
+    <script type="module" src="./components/app.js"></script>
+    <script src="./components/theme.js" defer></script>
   </body>
 </html>
