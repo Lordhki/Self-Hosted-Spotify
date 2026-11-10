@@ -17,7 +17,7 @@
   --sidebar-artwork-opacity: 0;
   --background-artwork: url("../assets/theme/Starlight.svg");
   --background-artwork-opacity: 1;
-  --background-artwork-size: cover;
+  --background-artwork-size: 100% auto;
   --background-artwork-overlay: none;
 }
 
@@ -25,7 +25,7 @@
   --sidebar-artwork-opacity: 0;
   --background-artwork: none;
   --background-artwork-opacity: 1;
-  --background-artwork-size: cover;
+  --background-artwork-size: 100% auto;
   --background-artwork-overlay: none;
 }
 
@@ -104,7 +104,6 @@ body.listening-page::before {
   opacity: var(--sidebar-artwork-opacity);
   pointer-events: none;
 }
-
 
 /* Existing wallpaper geometry and video cropping. Playback remains in theme.js. */
 .living-wallpaper {

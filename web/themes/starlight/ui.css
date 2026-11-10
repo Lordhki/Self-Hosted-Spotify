@@ -2,7 +2,7 @@
 :root[data-theme="starlight"] {
   --page-background: #07111f;
   /* Reveal the full-page SVG through tinted layout surfaces.
-     Raised controls and lyric/video panels keep their existing contrast. */
+     Raised controls and lyric/video panels retain theme-specific contrast. */
   --color-surface: transparent;
   --color-surface-panel: #0a192a;
   --color-surface-raised: #16324d;
@@ -25,9 +25,9 @@
   --lyrics-canvas-glow-position: 2% 2%;
   --lyrics-canvas-angle: 135deg;
   --lyrics-canvas-middle-stop: 58%;
-  --lyrics-canvas-start: rgba(7, 17, 31, 0.97);
-  --lyrics-canvas-middle: rgba(10, 27, 46, 0.95);
-  --lyrics-canvas-end: rgba(7, 17, 31, 0.98);
+  --lyrics-canvas-start: rgba(7, 17, 31, 0.15);
+  --lyrics-canvas-middle: rgba(10, 27, 46, 0.25);
+  --lyrics-canvas-end: rgba(7, 17, 31, 0.35);
   --lyrics-text-muted: rgba(227, 233, 214, 0.59);
   --badge-background: rgba(11, 19, 36, 0.5);
   --badge-border: rgba(125, 183, 255, 0.2);
