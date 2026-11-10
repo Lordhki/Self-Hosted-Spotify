@@ -1,0 +1,73 @@
+/* Shared sizing and typography. Themes must not override these tokens.
+   Appearance fallbacks below are neutral; see README.md for the public contract. */
+:root {
+  --sidebar-width: clamp(240px, 20vw, 360px);
+  --header-height: clamp(56px, 7.5vh, 84px);
+  --page-padding: clamp(14px, 2.2vw, 36px);
+  --section-gap: clamp(10px, 1.4vw, 20px);
+  --text-2xs: clamp(9px, 0.65vw, 11px);
+  --text-xs: clamp(10px, 0.75vw, 12px);
+  --text-sm: clamp(12px, 0.85vw, 14px);
+  --text-md: clamp(13px, 1vw, 16px);
+  --text-lg: clamp(16px, 1.4vw, 22px);
+  --text-xl: clamp(20px, 2vw, 28px);
+  --text-2xl: clamp(24px, 2.8vw, 38px);
+  --control-size: clamp(32px, 2.6vw, 40px);
+  --play-size: clamp(48px, 4vw, 60px);
+  --artwork-small: clamp(38px, 3vw, 48px);
+  --artwork-large: clamp(52px, 4.4vw, 68px);
+  --volume-width: clamp(68px, 6.8vw, 98px);
+  --space-2xs: clamp(2px, 0.3vw, 4px);
+  --space-xs: clamp(4px, 0.5vw, 8px);
+  --space-sm: clamp(8px, 0.9vw, 14px);
+  --space-md: clamp(12px, 1.3vw, 20px);
+  --space-lg: clamp(18px, 2vw, 28px);
+  color-scheme: dark;
+}
+
+/* Complete fallback palette: no selected theme is required for a usable UI. */
+:root {
+  --page-background: #121212;
+  --color-surface: #121212;
+  --color-surface-panel: #181818;
+  --color-surface-raised: #242424;
+  --color-surface-hover: rgba(255, 255, 255, 0.1);
+  --color-surface-raised-hover: #303030;
+  --color-track-hover: #282828;
+  --color-text: #eeeeee;
+  --color-text-muted: #aaaaaa;
+  --color-text-subtle: #888888;
+  --color-border: #383838;
+  --color-accent: #bbbbbb;
+  --color-accent-strong: #dddddd;
+  --color-accent-soft-bg: #303030;
+  --color-slider-track: #484848;
+  --sidebar-background: var(--color-surface);
+  --main-background: var(--color-surface);
+  --playback-background: var(--color-surface);
+  --lyrics-canvas-border: var(--color-border);
+  --lyrics-canvas-glow: transparent;
+  --lyrics-canvas-glow-position: 2% 2%;
+  --lyrics-canvas-angle: 135deg;
+  --lyrics-canvas-middle-stop: 58%;
+  --lyrics-canvas-start: var(--color-surface);
+  --lyrics-canvas-middle: var(--color-surface-panel);
+  --lyrics-canvas-end: var(--color-surface);
+  --lyrics-text-muted: var(--color-text-muted);
+  --badge-background: var(--color-surface-panel);
+  --badge-border: var(--color-border);
+  --timeline-track-fill: var(--color-accent-strong);
+  --timeline-track-empty: var(--color-slider-track);
+  --timeline-thumb: var(--color-accent-strong);
+  --volume-track-fill: var(--color-accent-strong);
+  --volume-track-empty: var(--color-slider-track);
+  --volume-thumb: var(--color-accent-strong);
+  --icon-button-color: currentColor;
+  --icon-button-hover-color: var(--icon-button-color);
+  --playlist-chevron-color: currentColor;
+  --playback-border: rgba(255, 255, 255, 0.05);
+  --play-indicator-background: var(--page-background);
+  --color-brand-ink: #0b1324;
+  --color-icon-subtle: #718b79;
+  --color-icon-active: #bdda91;
+}

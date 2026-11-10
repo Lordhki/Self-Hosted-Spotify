@@ -1,0 +1,6 @@
+/* Shared stylesheet entry point. Order preserves the base → component → viewport cascade. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("./tokens.css");
+@import url("./layout.css");
+@import url("./components.css");
+@import url("./responsive.css");

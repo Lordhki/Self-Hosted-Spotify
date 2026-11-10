@@ -1,0 +1,129 @@
+/* LEGACY BACKGROUNDS — preserve existing rendering, not a new abstraction.
+   Body artwork and the Magic Forest artwork/sidebar planes deliberately differ.
+   This file owns artwork placement and z-index 0 / -1. layout.css owns UI contexts.
+   Ambient-effects markup currently has no CSS; keep it for the later phase. */
+
+/* Temporary artwork contract. Keep this separate from UI palettes until the
+   background system is redesigned. URLs are relative to this stylesheet. */
+:root {
+  --background-artwork: none;
+  --background-artwork-opacity: 1;
+  --background-artwork-size: cover;
+  --background-artwork-overlay: none;
+  --sidebar-artwork-opacity: 0;
+}
+
+:root[data-theme="starlight"] {
+  --sidebar-artwork-opacity: 0;
+  --background-artwork: url("../assets/theme/Starlight.svg");
+  --background-artwork-opacity: 1;
+  --background-artwork-size: cover;
+  --background-artwork-overlay: none;
+}
+
+:root[data-theme="quiet"] {
+  --sidebar-artwork-opacity: 0;
+  --background-artwork: none;
+  --background-artwork-opacity: 1;
+  --background-artwork-size: cover;
+  --background-artwork-overlay: none;
+}
+
+:root[data-theme="magic-forest"] {
+  --sidebar-artwork-opacity: 0.12;
+  --background-artwork: url("../assets/theme/MagicForest.jpg");
+  --background-artwork-opacity: 0.25;
+  --background-artwork-size: 100% auto;
+  --background-artwork-overlay: linear-gradient(
+    to bottom,
+    rgba(12, 77, 57, 0.4),
+    transparent 50%,
+    rgba(10, 61, 46, 0.2)
+  );
+}
+
+.background-artwork {
+  display: none;
+}
+
+body.listening-page::before {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  opacity: var(--background-artwork-opacity);
+  background-image:
+    var(--background-artwork-overlay), var(--background-artwork);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: var(--background-artwork-size);
+  pointer-events: none;
+  content: "";
+}
+
+:root[data-theme="magic-forest"] body.listening-page::before {
+  display: none;
+}
+
+:root[data-theme="magic-forest"] .background-artwork {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+
+:root[data-theme="magic-forest"] .background-artwork::before {
+  position: absolute;
+  inset: 0;
+  background-image: var(--background-artwork);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: var(--background-artwork-size);
+  content: "";
+  opacity: var(--background-artwork-opacity);
+  pointer-events: none;
+}
+
+:root[data-theme="magic-forest"] .background-artwork::after {
+  position: absolute;
+  inset: 0;
+  background: var(--background-artwork-overlay);
+  content: "";
+  pointer-events: none;
+}
+
+:root[data-theme="magic-forest"] .sidebar::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: var(--background-artwork);
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+  content: "";
+  opacity: var(--sidebar-artwork-opacity);
+  pointer-events: none;
+}
+
+
+/* Existing wallpaper geometry and video cropping. Playback remains in theme.js. */
+.living-wallpaper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wallpaper-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.wallpaper-layer > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
