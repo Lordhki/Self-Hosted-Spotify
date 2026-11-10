@@ -123,3 +123,23 @@ Removed:
 
 `app.js`, `player.js`, `track.js`, backend sources, existing class/element
 interfaces, background markup and all media assets remain unchanged.
+
+## Follow-up: Starlight artwork visibility
+
+The appearance-preservation baseline above included an upstream bug: Starlight's
+opaque application surfaces concealed its SVG. Browser inspection confirmed HTTP
+200 / `image/svg+xml`, a valid 1440x960 SVG with stars and ambient artwork, and the
+correct body pseudo-element below `.app`. The opaque app, sidebar, main and
+playback backgrounds—not a missing resource or broken z-index—hid that plane.
+
+Starlight's palette now makes the app surface transparent and applies the same
+navy RGB color to the sidebar (55% opacity), main (20%) and playback (60%). Raised
+controls, borders, typography, lyric/video panels and all layout/stacking rules
+remain unchanged. No other theme palette or background implementation changed.
+
+Chromium screenshots at 1440x960 and 390x844 were inspected with the SVG visible
+through the layout and controls readable above it. All 11 automated checks passed,
+including three-theme switching and eight-viewport geometry/control hit testing.
+This intentional visibility correction supersedes Starlight's earlier screenshot
+baseline; that broken appearance is not the target. Cross-browser/physical-device
+and existing sample-artwork limitations described above still apply.

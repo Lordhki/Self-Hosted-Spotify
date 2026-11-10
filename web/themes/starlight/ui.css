@@ -1,7 +1,9 @@
 /* UI appearance only. The shared contract is documented in styles/README.md. */
 :root[data-theme="starlight"] {
   --page-background: #07111f;
-  --color-surface: #07111f;
+  /* Reveal the full-page SVG through tinted layout surfaces.
+     Raised controls and lyric/video panels keep their existing contrast. */
+  --color-surface: transparent;
   --color-surface-panel: #0a192a;
   --color-surface-raised: #16324d;
   --color-surface-hover: rgba(125, 183, 255, 0.1);
@@ -15,9 +17,9 @@
   --color-accent-strong: #1c467e;
   --color-accent-soft-bg: #19362a;
   --color-slider-track: #436c9259;
-  --sidebar-background: var(--color-surface);
-  --main-background: var(--color-surface);
-  --playback-background: var(--color-surface);
+  --sidebar-background: rgba(7, 17, 31, 0.55);
+  --main-background: rgba(7, 17, 31, 0.2);
+  --playback-background: rgba(7, 17, 31, 0.6);
   --lyrics-canvas-border: #305785;
   --lyrics-canvas-glow: rgba(27, 63, 97, 0.2);
   --lyrics-canvas-glow-position: 2% 2%;
