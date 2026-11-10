@@ -23,3 +23,7 @@ rad.json
 TestResults.xml
 #Github
 *.github
+
+# Local frontend validation environments and Python caches
+/work/
+__pycache__/

@@ -1,0 +1,46 @@
+/* UI appearance only. The shared contract is documented in styles/README.md. */
+:root[data-theme="starlight"] {
+  --page-background: #07111f;
+  --color-surface: #07111f;
+  --color-surface-panel: #0a192a;
+  --color-surface-raised: #16324d;
+  --color-surface-hover: rgba(125, 183, 255, 0.1);
+  --color-surface-raised-hover: #1d3d5d;
+  --color-track-hover: rgba(22, 50, 77, 0.62);
+  --color-text: #f2efdf;
+  --color-text-muted: #a9b8a7;
+  --color-text-subtle: #718b79;
+  --color-border: #1e3a5f;
+  --color-accent: #7db7ff;
+  --color-accent-strong: #1c467e;
+  --color-accent-soft-bg: #19362a;
+  --color-slider-track: #436c9259;
+  --sidebar-background: var(--color-surface);
+  --main-background: var(--color-surface);
+  --playback-background: var(--color-surface);
+  --lyrics-canvas-border: #305785;
+  --lyrics-canvas-glow: rgba(27, 63, 97, 0.2);
+  --lyrics-canvas-glow-position: 2% 2%;
+  --lyrics-canvas-angle: 135deg;
+  --lyrics-canvas-middle-stop: 58%;
+  --lyrics-canvas-start: rgba(7, 17, 31, 0.97);
+  --lyrics-canvas-middle: rgba(10, 27, 46, 0.95);
+  --lyrics-canvas-end: rgba(7, 17, 31, 0.98);
+  --lyrics-text-muted: rgba(227, 233, 214, 0.59);
+  --badge-background: rgba(11, 19, 36, 0.5);
+  --badge-border: rgba(125, 183, 255, 0.2);
+  --timeline-track-fill: var(--color-accent-strong);
+  --timeline-track-empty: var(--color-slider-track);
+  --timeline-thumb: var(--color-accent-strong);
+  --volume-track-fill: var(--color-accent-strong);
+  --volume-track-empty: var(--color-slider-track);
+  --volume-thumb: var(--color-accent-strong);
+  --icon-button-color: currentColor;
+  --icon-button-hover-color: var(--icon-button-color);
+  --playlist-chevron-color: currentColor;
+  --playback-border: rgba(255, 255, 255, 0.05);
+  --play-indicator-background: var(--page-background);
+  --color-brand-ink: #0b1324;
+  --color-icon-subtle: #718b79;
+  --color-icon-active: #bdda91;
+}

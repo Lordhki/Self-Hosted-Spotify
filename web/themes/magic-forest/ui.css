@@ -1,0 +1,55 @@
+/* UI appearance only. The shared contract is documented in styles/README.md. */
+:root[data-theme="magic-forest"] {
+  --page-background: linear-gradient(
+    90deg,
+    rgb(11, 46, 26) 0%,
+    #0b3b2d 45%,
+    #0a2b18 100%
+  );
+  --color-surface: transparent;
+  --color-surface-panel: #0b2e1a;
+  --color-surface-raised: rgba(19, 99, 57, 0.74);
+  --color-surface-hover: rgba(155, 215, 179, 0.12);
+  --color-surface-raised-hover: #20563b;
+  --color-track-hover: rgba(19, 99, 57, 0.74);
+  --color-text: #f2efdf;
+  --color-text-muted: #a9b8a7;
+  --color-text-subtle: #8aae9a;
+  --color-border: #0e613c;
+  --color-accent: #9bd7b3;
+  --color-accent-strong: #c4e6a2;
+  --color-accent-soft-bg: rgba(116, 177, 129, 0.2);
+  --color-slider-track: #1c5135;
+  --sidebar-background: linear-gradient(
+    90deg,
+    rgba(3, 37, 19, 0.966),
+    rgba(6, 44, 31, 0.753)
+  );
+  --main-background: rgba(11, 46, 26, 0.3);
+  --playback-background: transparent;
+  --lyrics-canvas-border: rgba(126, 190, 150, 0.36);
+  --lyrics-canvas-glow: rgba(167, 163, 115, 0.123);
+  --lyrics-canvas-glow-position: 43% 48%;
+  --lyrics-canvas-angle: 135deg;
+  --lyrics-canvas-middle-stop: 48%;
+  --lyrics-canvas-start: rgba(19, 78, 51, 0.3);
+  --lyrics-canvas-middle: rgba(10, 55, 41, 0.38);
+  --lyrics-canvas-end: rgba(5, 25, 16, 0.48);
+  --lyrics-text-muted: rgba(227, 233, 214, 0.59);
+  --badge-background: rgba(11, 46, 26, 0.5);
+  --badge-border: rgba(155, 215, 179, 0.28);
+  --timeline-track-fill: var(--color-accent-strong);
+  --timeline-track-empty: var(--color-slider-track);
+  --timeline-thumb: var(--color-accent-strong);
+  --volume-track-fill: var(--color-accent-strong);
+  --volume-track-empty: #0b4727;
+  --volume-thumb: var(--color-accent-strong);
+  --icon-button-color: var(--color-text-muted);
+  --icon-button-hover-color: var(--color-accent-strong);
+  --playlist-chevron-color: var(--color-text-muted);
+  --playback-border: rgba(255, 255, 255, 0.05);
+  --play-indicator-background: var(--page-background);
+  --color-brand-ink: #0b1324;
+  --color-icon-subtle: #718b79;
+  --color-icon-active: #bdda91;
+}

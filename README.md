@@ -14,6 +14,8 @@ Implemented:
 - Three selectable themes: **Starlight**, **Quiet**, and **Magic Forest**.
 - Persistent theme preference using `localStorage`.
 - Theme-specific living wallpaper videos with visibility-aware pause/resume behavior.
+- Modular CSS with independent UI palettes and isolated legacy background rendering.
+- CSS architecture and browser integration checks for themes, failure recovery and layouts.
 - Range-slider fill styling for player controls.
 - OpenAPI 3.1 contract for playlists, playlist tracks, and track audio streaming.
 
@@ -22,7 +24,7 @@ Not yet implemented:
 - Backend service and API routes described by `api-contract.yaml`.
 - Real playlist and track data from the API; the UI currently uses sample data.
 - Audio playback, queue, shuffle, repeat, seeking, and volume integration.
-- Authentication, persistence, deployment configuration, and automated tests.
+- Authentication, persistence, and deployment configuration.
 - Final artwork assets referenced by some sample tracks.
 
 ## Project structure
@@ -35,7 +37,9 @@ Not yet implemented:
 │   └── main.exe            # Compiled smoke-test executable
 ├── web/
 │   ├── main_menu.html      # Listening-room page markup
-│   ├── style.css           # Layout, responsive rules, themes, and component styles
+│   ├── styles/             # Shared tokens, layout, components and responsive CSS
+│   │   └── README.md       # CSS contract, theme authoring and legacy background ownership
+│   ├── themes/             # Independent Starlight, Quiet and Magic Forest UI palettes
 │   ├── components/
 │   │   ├── app.js          # Sample playlist and track-selection orchestration
 │   │   ├── player.js       # Range-control presentation behavior
@@ -82,4 +86,10 @@ Then open <http://localhost:8000/main_menu.html> in a browser.
 1. Implement the backend described by the API contract.
 2. Replace sample playlist data with API requests and real media metadata.
 3. Connect the player controls to the audio endpoint and browser media APIs.
-4. Add validation, automated tests, and deployment documentation.
+4. Extend validation to backend/media integration and add deployment documentation.
+
+## Frontend styling and validation
+
+See [`web/styles/README.md`](web/styles/README.md) for the CSS variable contract,
+theme registration, background ownership and optional test commands. Migration
+validation and limitations are recorded in [`web/styles/VALIDATION.md`](web/styles/VALIDATION.md).
