@@ -1,14 +1,8 @@
-export function renderTracks(tracks, onTrackSelect) {
+export function renderTracks(playlist, onTrackSelect) {
   const playlistContainer = document.getElementById("playlistContainer");
-
-  if (!playlistContainer) {
-    console.error("Playlist container not found");
-    return;
-  }
-
   playlistContainer.replaceChildren();
 
-  for (const track of tracks) {
+  for (const track of playlist) {
     const item = document.createElement("li");
     item.className = "track-item";
     item.dataset.trackId = track.id;
@@ -18,16 +12,7 @@ export function renderTracks(tracks, onTrackSelect) {
     row.type = "button";
 
     // Report which track the user selected.
-
     row.addEventListener("click", () => {
-      // Remove the highlight from the previously selected track.
-      const currentTrack = playlistContainer.querySelector(".is-current");
-      currentTrack?.classList.remove("is-current");
-
-      // Highlight the newly selected track.
-      item.classList.add("is-current");
-
-      // Notify the caller which track was selected.
       onTrackSelect(track.id);
     });
 

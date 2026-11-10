@@ -1,7 +1,45 @@
 import { renderTracks } from "./track.js";
 import "./player.js";
 
-const tracks = [
+function selectTrack(trackId) {
+  const track = playlist.find((track) => track.id === trackId);
+
+  if (!track) return;
+
+  // 1. Update the playlist highlight.
+  const playlistContainer = document.getElementById("playlistContainer");
+
+  playlistContainer
+    .querySelector(".is-current")
+    ?.classList.remove("is-current");
+
+  playlistContainer
+    .querySelector(`[data-track-id="${track.id}"]`)
+    ?.classList.add("is-current");
+
+  // 2. Update the listening room.
+  const artwork = document
+    .getElementById("nowPlayingContainer")
+    .querySelector(".current-art");
+  const metadata = document.getElementById("currentTrackMetadata");
+
+  artwork.style.backgroundImage = `url('${track.artworkUrl}')`;
+
+  metadata.replaceChildren();
+
+  const title = document.createElement("strong");
+  title.textContent = track.songName;
+
+  const artist = document.createElement("span");
+  artist.textContent = track.artistName;
+
+  metadata.append(title, artist);
+  // Set the artwork, song name, and artist using `track`.
+
+  // 3. Later: notify the player module.
+}
+
+const playlist = [
   {
     id: "track_001",
     songName: "Example Song",
@@ -14,7 +52,7 @@ const tracks = [
     songName: "Another Song",
     artistName: "Another Artist",
     duration: 185,
-    artworkUrl: "./assets/artwork/another.jpg"
+    artworkUrl: "./assets/theme/MagicForest.jpg"
   },
   {
     id: "track_003",
@@ -32,6 +70,4 @@ const tracks = [
   }
 ];
 
-renderTracks(tracks, (trackId) => {
-  console.log("Selected track ID:", trackId);
-});
+renderTracks(playlist, selectTrack);
