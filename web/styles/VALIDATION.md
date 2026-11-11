@@ -143,3 +143,11 @@ including three-theme switching and eight-viewport geometry/control hit testing.
 This intentional visibility correction supersedes Starlight's earlier screenshot
 baseline; that broken appearance is not the target. Cross-browser/physical-device
 and existing sample-artwork limitations described above still apply.
+
+## Follow-up: untinted Starlight artwork
+
+Starlight now uses transparent sidebar, main and playback surfaces and transparent
+lyric/video canvas gradient colors, removing the previous navy tints and added
+glow. The legacy SVG remains at opacity 1 with no overlay. Its intrinsic artwork
+is unchanged. Control backgrounds, borders and the wallpaper video remain intact;
+other themes are unchanged. This supersedes the tinted-surface configuration above.
