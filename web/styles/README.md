@@ -118,8 +118,9 @@ requiring every new theme to use the Magic Forest implementation.
 
 - `body.listening-page` creates an isolated page context. Its fixed `::before`
   artwork occupies z-index 0 for Starlight/Quiet. Starlight uses a transparent
-  app surface and translucent navy sidebar/main/playback surfaces so its SVG
-  remains visible; raised controls and lyric/video panels retain their contrast.
+  app, sidebar, main and playback surfaces so its SVG remains untinted at full
+  opacity. Lyric/video canvas gradient colors are transparent as well; control
+  surfaces and panel borders remain independent.
   Quiet explicitly has no static artwork.
 - Magic Forest disables that body pseudo-element and uses `.background-artwork`
   with separate image and overlay pseudo-elements at z-index 0. The distinction
