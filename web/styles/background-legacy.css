@@ -15,7 +15,7 @@
 
 :root[data-theme="starlight"] {
   --sidebar-artwork-opacity: 0;
-  --background-artwork: url("../assets/theme/Starlight.svg");
+  --background-artwork: url("../themes/starlight/Starlight.svg");
   --background-artwork-opacity: 1;
   --background-artwork-size: 100% auto;
   --background-artwork-overlay: none;
@@ -31,7 +31,7 @@
 
 :root[data-theme="magic-forest"] {
   --sidebar-artwork-opacity: 0.12;
-  --background-artwork: url("../assets/theme/MagicForest.jpg");
+  --background-artwork: url("../themes/magic-forest/MagicForest.jpg");
   --background-artwork-opacity: 0.25;
   --background-artwork-size: 100% auto;
   --background-artwork-overlay: linear-gradient(
