@@ -4,7 +4,7 @@ A self-hosted music listening-room prototype inspired by Spotify. The current re
 
 ## Current progress
 
-**Status as of 2026-11-10:** frontend prototype in active development.
+**Status as of 2026-11-16:** first complete theme and frontend prototype in active development.
 
 Implemented:
 
@@ -15,7 +15,7 @@ Implemented:
 - Persistent theme preference using `localStorage`.
 - Theme-specific living wallpaper videos with visibility-aware pause/resume behavior.
 - Modular CSS with independent UI palettes and isolated legacy background rendering.
-- CSS architecture and browser integration checks for themes, failure recovery and layouts.
+- Completed Magic Forest palette, artwork and looping living-wallpaper montage.
 - Range-slider fill styling for player controls.
 - OpenAPI 3.1 contract for playlists, playlist tracks, and track audio streaming.
 
@@ -62,22 +62,14 @@ The API is versioned under `/api/v1` and currently specifies:
 
 The audio endpoint is designed for browser playback and byte-range seeking while keeping file paths private from clients. See [`api-contract.yaml`](./api-contract.yaml) for schemas and error responses.
 
-## Repository status
-
-- Default branch: `main`
-- Working tree: clean at the time of documentation
-- Current HEAD: `699546a`
-- Feature branches: none currently present
-- Pull requests: no open pull requests; PR #1, which fixed background artwork covering page content, is merged
-
 ## Running the prototype
 
 The web prototype is static and can be served by any local HTTP server.
 
-The Magic Forest wallpaper is stored with Git LFS. Install Git LFS and run
-`git lfs install` followed by `git lfs pull` after cloning to download the video.
-The theme plays `web/themes/magic-forest/magic-forest.mp4` at normal speed;
-Starlight and Quiet retain their existing videos and playback rates.
+Tracked wallpaper media uses Git LFS. Install Git LFS and run `git lfs install`
+followed by `git lfs pull` after cloning. The Magic Forest theme plays
+`web/themes/magic-forest/magic-forest.mp4` at normal speed. Generated replacement
+MP4 renders are ignored by Git and remain local unless explicitly force-added.
 
 For example, serve the downloaded files locally:
 
@@ -98,5 +90,5 @@ Then open <http://localhost:8000/main_menu.html> in a browser.
 ## Frontend styling and validation
 
 See [`web/styles/README.md`](web/styles/README.md) for the CSS variable contract,
-theme registration, background ownership and optional test commands. Migration
-validation and limitations are recorded in [`web/styles/VALIDATION.md`](web/styles/VALIDATION.md).
+theme registration and background ownership. Historical migration validation and
+limitations are recorded in [`web/styles/VALIDATION.md`](web/styles/VALIDATION.md).

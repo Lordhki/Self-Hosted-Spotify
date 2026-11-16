@@ -4,6 +4,9 @@ Validated on 2026-11-10 against the original checkout at `1114e92`, using local
 Python HTTP servers and Chromium with Playwright. Backend files and artwork/video
 assets were unchanged.
 
+This is a historical validation record. The temporary Python/Playwright harness
+and its requirements file were removed on 2026-11-16 after the migration work.
+
 ## Results
 
 - **11 automated tests passed:** four CSS architecture/parser checks and seven
@@ -104,9 +107,6 @@ Created:
 - `web/themes/starlight/ui.css`
 - `web/themes/quiet/ui.css`
 - `web/themes/magic-forest/ui.css`
-- `tests/test_css_architecture.py`
-- `tests/test_theme_browser.py`
-- `tests/requirements.txt` (optional development tools only)
 
 Modified:
 
@@ -115,11 +115,13 @@ Modified:
 - `web/components/theme.js`: resource registry, staged stylesheet loading,
   authoritative active state and existing video lifecycle.
 - `README.md`: current styling structure and validation pointers.
-- `.gitignore`: local validation environment and Python cache exclusions.
+- `.gitignore`: local validation environments, Python caches and generated MP4 renders.
 
 Removed:
 
 - `web/style.css`: migrated into the files above; no remaining page references.
+- `tests/test_css_architecture.py`, `tests/test_theme_browser.py` and
+  `tests/requirements.txt`: temporary migration validation harness.
 
 `app.js`, `player.js`, `track.js`, backend sources, existing class/element
 interfaces, background markup and all media assets remain unchanged.

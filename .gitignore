@@ -27,3 +27,6 @@ TestResults.xml
 # Local frontend validation environments and Python caches
 /work/
 __pycache__/
+
+# Generated video renders
+*.mp4

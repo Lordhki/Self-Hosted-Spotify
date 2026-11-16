@@ -158,18 +158,10 @@ No artwork system, iframe or additional animation was introduced.
 
 ## Validation
 
-See `VALIDATION.md` for this migration's evidence, limitations and file inventory.
-Optional development checks require Python, Chromium and `tests/requirements.txt`:
+See `VALIDATION.md` for the migration's historical evidence, limitations and file
+inventory. The temporary Python/Playwright validation harness has been removed.
+The remaining source-level check is:
 
 ```sh
-python3 -m venv work/venv
-work/venv/bin/pip install -r tests/requirements.txt
-# Use an installed Chromium, or: work/venv/bin/playwright install chromium
-work/venv/bin/python -m unittest discover -s tests -v
 node --check web/components/theme.js
 ```
-
-Set `CHROMIUM_EXECUTABLE` if Chromium is installed under another name/path.
-Browser tests start their own local server and use the existing system-font
-fallback for deterministic offline checks. These packages are development tools,
-not runtime dependencies or a new build system.
