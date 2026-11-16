@@ -139,9 +139,12 @@ requiring every new theme to use the Magic Forest implementation.
   `background-size: 100vw 100vh`, including its existing mobile/scroll behavior.
 - `.wallpaper-layer` and its cover-sized video keep the original geometry. One
   persistent muted, looping, inline video switches sources without replacing the
-  element. Starlight uses `starlight/6.mp4` at **0.1**, Quiet `quiet/1.mp4` at
-  **0.5**, and Magic Forest `magic-forest/1.mp4` at **0.1** under
-  `assets/wallpaper/`. Visibility changes pause/resume that same video.
+  element. Starlight uses `assets/wallpaper/starlight/6.mp4` at **0.1** and Quiet
+  uses `assets/wallpaper/quiet/1.mp4` at **0.5**. Magic Forest uses
+  `themes/magic-forest/magic-forest.mp4` at normal speed (**1**). Paths are
+  relative to `web/`. The Magic Forest video is stored with Git LFS; run
+  `git lfs pull` after cloning to download it before serving the prototype.
+  Visibility changes pause/resume that same video.
 - `.ambient-effects` and its meteor spans currently have no matching CSS. Their
   markup is preserved, as are dormant component states and background helpers;
   they were not assumed obsolete merely because the sample page doesn't use them.

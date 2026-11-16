@@ -72,7 +72,14 @@ The audio endpoint is designed for browser playback and byte-range seeking while
 
 ## Running the prototype
 
-The web prototype is static and can be served by any local HTTP server. For example:
+The web prototype is static and can be served by any local HTTP server.
+
+The Magic Forest wallpaper is stored with Git LFS. Install Git LFS and run
+`git lfs install` followed by `git lfs pull` after cloning to download the video.
+The theme plays `web/themes/magic-forest/magic-forest.mp4` at normal speed;
+Starlight and Quiet retain their existing videos and playback rates.
+
+For example, serve the downloaded files locally:
 
 ```bash
 cd web

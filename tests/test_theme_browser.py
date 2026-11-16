@@ -18,7 +18,7 @@ WEB = Path(__file__).resolve().parents[1] / "web"
 THEMES = [
     ("starlight", "Starlight", "#07111f", "starlight/6.mp4", 0.1),
     ("quiet", "Quiet", "#0b1712", "quiet/1.mp4", 0.5),
-    ("magic-forest", "Magic Forest", "#0b2e1a", "magic-forest/1.mp4", 0.1),
+    ("magic-forest", "Magic Forest", "#0b2e1a", "themes/magic-forest/magic-forest.mp4", 1),
 ]
 
 

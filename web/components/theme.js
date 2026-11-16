@@ -4,19 +4,28 @@
   const resourceBase = new URL("../", document.currentScript.src);
   const themes = [
     {
-      id: "starlight", label: "Starlight", color: "#07111f",
+      id: "starlight",
+      label: "Starlight",
+      color: "#07111f",
       stylesheet: "themes/starlight/ui.css",
       wallpaper: { src: "assets/wallpaper/starlight/6.mp4", playbackRate: 0.1 }
     },
     {
-      id: "quiet", label: "Quiet", color: "#0b1712",
+      id: "quiet",
+      label: "Quiet",
+      color: "#0b1712",
       stylesheet: "themes/quiet/ui.css",
       wallpaper: { src: "assets/wallpaper/quiet/1.mp4", playbackRate: 0.5 }
     },
     {
-      id: "magic-forest", label: "Magic Forest", color: "#0b2e1a",
+      id: "magic-forest",
+      label: "Magic Forest",
+      color: "#0b2e1a",
       stylesheet: "themes/magic-forest/ui.css",
-      wallpaper: { src: "assets/wallpaper/magic-forest/1.mp4", playbackRate: 0.1 }
+      wallpaper: {
+        src: "themes/magic-forest/magic-forest.mp4",
+        playbackRate: 1
+      }
     }
   ];
   const storageKey = "lowave-theme";
@@ -129,7 +138,9 @@
     stylesheet.media = "not all";
 
     let resolveLoad;
-    const promise = new Promise((resolve) => { resolveLoad = resolve; });
+    const promise = new Promise((resolve) => {
+      resolveLoad = resolve;
+    });
     let settled = false;
     const request = { theme, promise, cancel: () => finish(false) };
     function finish(loaded, failed = false) {
@@ -144,7 +155,10 @@
       } else {
         stylesheet.remove();
         updateControls();
-        if (failed) console.warn(`Unable to load ${theme.label} theme stylesheet; keeping the current palette.`);
+        if (failed)
+          console.warn(
+            `Unable to load ${theme.label} theme stylesheet; keeping the current palette.`
+          );
       }
       resolveLoad(loaded);
     }
@@ -161,8 +175,14 @@
     controlsReady = true;
     toggle = document.getElementById("theme-toggle");
     label = toggle?.querySelector("[data-theme-label]");
-    const wallpaperLayer = document.querySelector(".video-panel .wallpaper-layer");
-    if (!(toggle instanceof HTMLButtonElement) || !(label instanceof HTMLElement) || !wallpaperLayer) {
+    const wallpaperLayer = document.querySelector(
+      ".video-panel .wallpaper-layer"
+    );
+    if (
+      !(toggle instanceof HTMLButtonElement) ||
+      !(label instanceof HTMLElement) ||
+      !wallpaperLayer
+    ) {
       console.warn("Theme controls or wallpaper layer are missing.");
       toggle = null;
       label = null;
@@ -171,7 +191,8 @@
     }
 
     // Keep the existing layer and one persistent video element.
-    wallpaperVideo = wallpaperLayer.querySelector("video") || document.createElement("video");
+    wallpaperVideo =
+      wallpaperLayer.querySelector("video") || document.createElement("video");
     wallpaperVideo.muted = true;
     wallpaperVideo.defaultMuted = true;
     wallpaperVideo.loop = true;
@@ -180,7 +201,8 @@
     wallpaperVideo.preload = "auto";
     wallpaperVideo.setAttribute("aria-hidden", "true");
     wallpaperVideo.tabIndex = -1;
-    if (!wallpaperVideo.parentElement) wallpaperLayer.appendChild(wallpaperVideo);
+    if (!wallpaperVideo.parentElement)
+      wallpaperLayer.appendChild(wallpaperVideo);
 
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) wallpaperVideo.pause();
@@ -202,10 +224,12 @@
   const initialTheme = findTheme(readSavedTheme() || root.dataset.theme);
   applyTheme(initialTheme.id).then(async (loaded) => {
     if (loaded || activeTheme || pendingLoad) return;
-    if (initialTheme !== themes[0] && await applyTheme(themes[0].id)) return;
+    if (initialTheme !== themes[0] && (await applyTheme(themes[0].id))) return;
     // If even the default stylesheet fails, the complete neutral token contract
     // keeps the app usable. The next toggle can retry loading a theme.
     if (!activeTheme && !pendingLoad) commitTheme(themes[0], null);
   });
-  document.addEventListener("DOMContentLoaded", initializeControls, { once: true });
+  document.addEventListener("DOMContentLoaded", initializeControls, {
+    once: true
+  });
 })();
