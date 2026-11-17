@@ -117,7 +117,11 @@
 
   function readThemeConfiguration(stylesheet) {
     const styles = getComputedStyle(root);
-    const source = styles.getPropertyValue("--theme-wallpaper-src").trim();
+    // Custom properties preserve CSS string quotes; URL() treats them as path text.
+    const source = styles
+      .getPropertyValue("--theme-wallpaper-src")
+      .trim()
+      .replace(/^(['"])(.*)\1$/, "$2");
     const playbackRate = Number(
       styles.getPropertyValue("--theme-wallpaper-rate").trim()
     );
