@@ -6,26 +6,17 @@
     {
       id: "starlight",
       label: "Starlight",
-      color: "#07111f",
-      stylesheet: "themes/starlight/ui.css",
-      wallpaper: { src: "assets/wallpaper/starlight/6.mp4", playbackRate: 0.1 }
+      stylesheet: "themes/starlight/ui.css"
     },
     {
       id: "quiet",
       label: "Quiet",
-      color: "#0b1712",
-      stylesheet: "themes/quiet/ui.css",
-      wallpaper: { src: "assets/wallpaper/quiet/1.mp4", playbackRate: 0.5 }
+      stylesheet: "themes/quiet/ui.css"
     },
     {
       id: "magic-forest",
       label: "Magic Forest",
-      color: "#0b2e1a",
-      stylesheet: "themes/magic-forest/ui.css",
-      wallpaper: {
-        src: "themes/magic-forest/magic-forest.mp4",
-        playbackRate: 1
-      }
+      stylesheet: "themes/magic-forest/ui.css"
     }
   ];
   const storageKey = "lowave-theme";
@@ -37,6 +28,7 @@
   // are projections updated together after a successful stylesheet load.
   let activeTheme = null;
   let activeStylesheet = null;
+  let activeWallpaper = null;
   let pendingLoad = null;
   let toggle = null;
   let label = null;
@@ -89,9 +81,9 @@
   }
 
   function setWallpaper() {
-    if (!wallpaperVideo || !activeTheme) return;
+    if (!wallpaperVideo || !activeWallpaper) return;
 
-    const { src, playbackRate } = activeTheme.wallpaper;
+    const { src, playbackRate } = activeWallpaper;
     if (currentWallpaper !== src) {
       currentWallpaper = src;
       wallpaperVideo.pause();
@@ -113,13 +105,33 @@
     activeTheme = theme;
     activeStylesheet = stylesheet;
     root.dataset.theme = theme.id;
+    activeWallpaper = readThemeConfiguration(stylesheet);
     previousStylesheet?.remove();
     if (stylesheet) stylesheet.id = "theme-stylesheet";
-    if (themeColor) themeColor.content = theme.color;
+    if (themeColor) themeColor.content = readThemeColor();
     updateControls();
     saveTheme(theme.id);
     setWallpaper();
     if (controlsReady) root.removeAttribute("data-theme-loading");
+  }
+
+  function readThemeConfiguration(stylesheet) {
+    const styles = getComputedStyle(root);
+    const source = styles.getPropertyValue("--theme-wallpaper-src").trim();
+    const playbackRate = Number(
+      styles.getPropertyValue("--theme-wallpaper-rate").trim()
+    );
+
+    return {
+      src: source ? new URL(source, stylesheet?.href || resourceBase).href : "",
+      playbackRate: Number.isFinite(playbackRate) && playbackRate > 0
+        ? playbackRate
+        : 1
+    };
+  }
+
+  function readThemeColor() {
+    return getComputedStyle(root).getPropertyValue("--theme-color").trim();
   }
 
   function applyTheme(id) {

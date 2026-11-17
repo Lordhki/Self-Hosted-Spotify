@@ -5,13 +5,13 @@ artwork and video behavior. There is no build step or styling framework.
 
 ## Ownership and cascade
 
-`main_menu.html` loads `styles/style.css`, then `styles/background-legacy.css`.
-The entry point imports these shared files in order:
+`main_menu.html` loads `styles/style.css`. The entry point imports these shared
+files in order:
 
 | File | Owns |
 | --- | --- |
 | `tokens.css` | Shared geometry/typography scales and a complete neutral fallback palette |
-| `layout.css` | Page reset, app/sidebar/main/playback structure, display panels and UI stacking contexts |
+| `layout.css` | Page reset, app/sidebar/main/playback structure, background planes, display panels and UI stacking contexts |
 | `components.css` | Component geometry, states and token-based appearance |
 | `responsive.css` | Existing viewport overrides, in their original order, and reduced-motion rules |
 
@@ -21,11 +21,12 @@ last, preserving width breakpoints at 1120, 960, 768 and 400px and the short-scr
 query at height <=720px / width >=769px. No cascade layers were added, avoiding a
 change to the existing specificity model.
 
-Each `themes/<id>/ui.css` sets only public appearance properties under
-`:root[data-theme="<id>"]`. It contains no layout rules, media queries or artwork
-URLs. All three existing palettes explicitly supply the complete appearance
-contract. Optional properties in future themes inherit neutral defaults rather
-than values from a previously active theme.
+Each `themes/<id>/ui.css` owns that theme's public appearance properties,
+artwork URLs, wallpaper source/rate and theme-color value under
+`:root[data-theme="<id>"]`. Shared files contain only neutral defaults and
+geometry. Theme files may contain the small artwork selectors needed by that
+theme, but no media queries. All three existing palettes explicitly supply the
+complete appearance contract.
 
 ## Shared custom property contract
 
@@ -72,9 +73,10 @@ component values rather than unnecessary palette tokens.
 ## Loading and switching themes
 
 `components/theme.js` runs once in the head, before the body is parsed. Its small
-registry maps IDs to labels, metadata colors, UI stylesheet paths and existing
-wallpaper sources/rates. URLs resolve against the script URL so serving either
-the repository or `web/` directly works.
+registry maps IDs to labels and UI stylesheet paths. The active stylesheet
+exposes theme color, wallpaper source and playback rate through CSS custom
+properties. URLs resolve against the stylesheet URL so serving either the
+repository or `web/` directly works.
 
 The controller reads `lowave-theme` from localStorage and normalizes unknown IDs
 to Starlight. `activeTheme` is the only authoritative active state. A pending
@@ -103,18 +105,18 @@ and the core fallback palette remains usable.
 1. Create `themes/<id>/ui.css`. Copy an existing palette's declaration list, scope
    it to the new ID and edit appearance tokens only. Keep resource paths relative
    to the CSS file when resources are needed in a later background phase.
-2. Add one registry entry in `components/theme.js` with a unique `id`, `label`,
-   `color`, `stylesheet`, and wallpaper `src`/`playbackRate`. Existing wallpaper
-   configuration remains explicit; no framework or generated manifest is needed.
+2. Add one registry entry in `components/theme.js` with a unique `id`, `label`
+   and `stylesheet`. Put `--theme-color`, `--theme-wallpaper-src` and
+   `--theme-wallpaper-rate` in the theme's `ui.css`; keep artwork configuration
+   there too.
 3. Test switching, reload, failed loads, and the existing viewports. No shared CSS
    changes are needed for an ordinary UI palette. Add an appearance token with a
    neutral default, or a reusable component variant, for a new component need.
 
-Custom background artwork is a separate concern: this phase deliberately keeps
-existing exceptional implementations in `background-legacy.css`, rather than
-requiring every new theme to use the Magic Forest implementation.
+Custom background artwork stays with the theme that owns it. Shared layout only
+provides the neutral artwork plane and video geometry.
 
-## Legacy background dependencies reserved for the next phase
+## Background and wallpaper dependencies
 
 - `body.listening-page` creates an isolated page context. Its fixed `::before`
   artwork occupies z-index 0 for Starlight/Quiet. Starlight uses a transparent
@@ -131,18 +133,19 @@ requiring every new theme to use the Magic Forest implementation.
   existing local z-index 1; `.video-panel` retains its isolated clipping context.
 - `--background-artwork`, `--background-artwork-opacity`,
   `--background-artwork-size`, `--background-artwork-overlay` and
-  `--sidebar-artwork-opacity` are **legacy-only** variables. Their per-theme
-  values and URLs live in `background-legacy.css`, outside the UI contract.
-- Original assets remain at `assets/theme/Starlight.svg` and
-  `assets/theme/MagicForest.jpg`. CSS URLs gained `../` only to account for the
-  stylesheet's new directory. Magic Forest's sidebar uses the original
+  `--sidebar-artwork-opacity` have neutral defaults in `tokens.css`; their
+  per-theme values and URLs live in each theme's `ui.css`.
+- Artwork assets remain at `themes/starlight/Starlight.svg` and
+  `themes/magic-forest/MagicForest.jpg`. CSS URLs stay relative to each theme
+  stylesheet. Magic Forest's sidebar uses the original
   `background-size: 100vw 100vh`, including its existing mobile/scroll behavior.
 - `.wallpaper-layer` and its cover-sized video keep the original geometry. One
   persistent muted, looping, inline video switches sources without replacing the
-  element. Starlight uses `assets/wallpaper/starlight/6.mp4` at **0.1** and Quiet
-  uses `assets/wallpaper/quiet/1.mp4` at **0.5**. Magic Forest uses
-  `themes/magic-forest/magic-forest.mp4` at normal speed (**1**). Paths are
-  relative to `web/`. The Magic Forest video is stored with Git LFS; run
+  element. Theme CSS exposes these values: Starlight uses
+  `assets/starlight/6.mp4` at **0.1**, Quiet uses `assets/quiet/1.mp4` at
+  **0.5**, and Magic Forest uses
+  `themes/magic-forest/magic-forest.mp4` at normal speed (**1**). The Magic
+  Forest video is stored with Git LFS; run
   `git lfs pull` after cloning to download it before serving the prototype.
   Visibility changes pause/resume that same video.
 - `.ambient-effects` and its meteor spans currently have no matching CSS. Their

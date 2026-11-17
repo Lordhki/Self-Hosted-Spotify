@@ -1,5 +1,13 @@
-/* UI appearance only. The shared contract is documented in styles/README.md. */
+/* Theme appearance and resources. The shared contract is documented in styles/README.md. */
 :root[data-theme="quiet"] {
+  --theme-color: #0b1712;
+  --theme-wallpaper-src: "../../assets/quiet/1.mp4";
+  --theme-wallpaper-rate: 0.5;
+  --background-artwork: none;
+  --background-artwork-opacity: 1;
+  --background-artwork-size: 100% auto;
+  --background-artwork-overlay: none;
+  --sidebar-artwork-opacity: 0;
   --page-background: #0b1712;
   --color-surface: #0b1712;
   --color-surface-panel: #102019;

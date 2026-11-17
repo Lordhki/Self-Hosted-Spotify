@@ -1,4 +1,4 @@
-/* Application structure and UI stacking. Background planes live in background-legacy.css. */
+/* Application structure, background planes and UI stacking. */
 
 *,
 *::before,
@@ -19,6 +19,45 @@ body.listening-page {
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+}
+
+.background-artwork {
+  display: none;
+}
+
+body.listening-page::before {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  opacity: var(--background-artwork-opacity);
+  background-image:
+    var(--background-artwork-overlay), var(--background-artwork);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: var(--background-artwork-size);
+  pointer-events: none;
+  content: "";
+}
+
+.living-wallpaper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wallpaper-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.wallpaper-layer > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .app {

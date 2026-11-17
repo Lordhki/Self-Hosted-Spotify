@@ -1,5 +1,13 @@
-/* UI appearance only. The shared contract is documented in styles/README.md. */
+/* Theme appearance and resources. The shared contract is documented in styles/README.md. */
 :root[data-theme="starlight"] {
+  --theme-color: #07111f;
+  --theme-wallpaper-src: "../../assets/starlight/6.mp4";
+  --theme-wallpaper-rate: 0.1;
+  --background-artwork: url("./Starlight.svg");
+  --background-artwork-opacity: 1;
+  --background-artwork-size: 100% auto;
+  --background-artwork-overlay: none;
+  --sidebar-artwork-opacity: 0;
   --page-background: #07111f;
   /* Reveal the full-page SVG through tinted layout surfaces.
      Raised controls and lyric/video panels retain theme-specific contrast. */

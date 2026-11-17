@@ -84,11 +84,12 @@ holds body visibility; complete fallbacks and per-request timeouts bound failure
 recovery. A failed switch keeps the current theme and logs a warning rather than
 adding a new error UI during an architectural refactor.
 
-Artwork rendering remains intentionally exceptional in `background-legacy.css`:
-the body artwork plane, Magic Forest's separate image/overlay planes and sidebar
-pseudo-element, legacy artwork variables, wallpaper cropping and dormant helpers
-remain there. The UI layout owns the page/app/sidebar/panel stacking contexts.
-Magic Forest's transparent region surfaces still expose that legacy artwork.
+Artwork rendering remains intentionally exceptional in the owning theme CSS:
+the shared layout provides the body artwork plane, wallpaper cropping and
+dormant helpers; Magic Forest's separate image/overlay planes and sidebar
+pseudo-element remain in `themes/magic-forest/ui.css`. The UI layout owns the
+page/app/sidebar/panel stacking contexts.
+Magic Forest's transparent region surfaces still expose that theme artwork.
 Adding a normal UI theme requires only a palette and registry entry; a different
 static-artwork implementation remains a separate background-phase concern.
 
@@ -101,7 +102,6 @@ Created:
 - `web/styles/layout.css`
 - `web/styles/components.css`
 - `web/styles/responsive.css`
-- `web/styles/background-legacy.css`
 - `web/styles/README.md`
 - `web/styles/VALIDATION.md`
 - `web/themes/starlight/ui.css`
@@ -113,7 +113,7 @@ Modified:
 - `web/main_menu.html`: new stylesheet links, early theme initialization and
   token-based SVG strokes with the original effective colors.
 - `web/components/theme.js`: resource registry, staged stylesheet loading,
-  authoritative active state and existing video lifecycle.
+authoritative active state and CSS-backed video lifecycle.
 - `README.md`: current styling structure and validation pointers.
 - `.gitignore`: local validation environments, Python caches and generated MP4 renders.
 

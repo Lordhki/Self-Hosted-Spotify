@@ -1,6 +1,14 @@
 /* Shared sizing and typography. Themes must not override these tokens.
    Appearance fallbacks below are neutral; see README.md for the public contract. */
 :root {
+  --theme-color: #121212;
+  --theme-wallpaper-src: "";
+  --theme-wallpaper-rate: 1;
+  --background-artwork: none;
+  --background-artwork-opacity: 1;
+  --background-artwork-size: cover;
+  --background-artwork-overlay: none;
+  --sidebar-artwork-opacity: 0;
   --sidebar-width: clamp(240px, 20vw, 360px);
   --header-height: clamp(56px, 7.5vh, 84px);
   --page-padding: clamp(14px, 2.2vw, 36px);
