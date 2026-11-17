@@ -50,7 +50,7 @@
   --lyrics-canvas-end: rgba(5, 25, 16, 0.48);
   --lyrics-text-muted: rgba(227, 233, 214, 0.59);
   --badge-background: rgba(11, 46, 26, 0.5);
-  --badge-border: rgba(155, 215, 179, 0.28);
+  --badge-border: rgba(155, 215, 179, 0.42);
   --timeline-track-fill: var(--color-accent-strong);
   --timeline-track-empty: var(--color-slider-track);
   --timeline-thumb: var(--color-accent-strong);
@@ -110,4 +110,196 @@
   content: "";
   opacity: var(--sidebar-artwork-opacity);
   pointer-events: none;
+}
+
+/* Nine independent leaves from the original three spans and their pseudos. */
+:root[data-theme="magic-forest"] .ambient-effects {
+  --forest-speed: 0.75;
+  display: block;
+}
+
+/* A stationary span paints one leaf with its shadow; its two pseudo-elements
+   fall independently. Moving or fading the span itself would affect all three.
+   Both paths descend linearly from -12vh to 124vh and fade before resetting. */
+@keyframes forest-shadow-fall {
+  0% {
+    box-shadow: calc(var(--forest-wind) * 0vw) -12vh 0 0 rgba(var(--forest-color), 0);
+  }
+  8% {
+    box-shadow: calc(var(--forest-wind) * 0.96vw) -1.12vh 0 0 rgba(var(--forest-color), 0);
+  }
+  18% {
+    box-shadow: calc(var(--forest-wind) * 2.16vw) 12.48vh 0 0 rgba(var(--forest-color), 1);
+  }
+  82% {
+    box-shadow: calc(var(--forest-wind) * 9.84vw) 99.52vh 0 0 rgba(var(--forest-color), 1);
+  }
+  92% {
+    box-shadow: calc(var(--forest-wind) * 11.04vw) 113.12vh 0 0 rgba(var(--forest-color), 0);
+  }
+  100% {
+    box-shadow: calc(var(--forest-wind) * 12vw) 124vh 0 0 rgba(var(--forest-color), 0);
+  }
+}
+
+@keyframes forest-shadow-flutter {
+  0%, 100% {
+    border-radius: 50% 5% 50% 5%;
+  }
+  50% {
+    border-radius: 5% 50% 5% 50%;
+  }
+}
+
+@keyframes forest-leaf-fall {
+  0% {
+    translate: 0 -12vh;
+    opacity: 0;
+  }
+  8%, 92% {
+    opacity: 0;
+  }
+  18%, 82% {
+    opacity: 1;
+  }
+  100% {
+    translate: calc(var(--forest-wind) * 12vw) 124vh;
+    opacity: 0;
+  }
+}
+
+@keyframes forest-leaf-turn {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: calc(var(--forest-turn) * 360deg);
+  }
+}
+
+/* Shared geometry and timing. Each leaf overrides its own period and delay. */
+:root[data-theme="magic-forest"] .ambient-effects__meteor,
+:root[data-theme="magic-forest"] .ambient-effects__meteor::before,
+:root[data-theme="magic-forest"] .ambient-effects__meteor::after {
+  width: clamp(9.6px, 1.32vw, 18px);
+  height: clamp(14.4px, 1.92vw, 26.4px);
+  border-radius: 50% 5% 50% 5%;
+  transform-origin: center;
+  animation-duration: calc(var(--forest-period) / var(--forest-speed));
+  animation-delay: calc(var(--forest-delay) / var(--forest-speed));
+  animation-iteration-count: infinite;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor {
+  --forest-color: 29, 77, 51;
+  top: 0;
+  animation-name: forest-shadow-fall, forest-shadow-flutter;
+  animation-timing-function: linear, ease-in-out;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor::before,
+:root[data-theme="magic-forest"] .ambient-effects__meteor::after {
+  top: 0;
+  /* Keep spawn positions separate from rotation to prevent orbital motion. */
+  left: var(--forest-offset);
+  background: rgb(var(--forest-color));
+  opacity: 0;
+  content: "";
+  animation-name: forest-leaf-fall, forest-leaf-turn;
+  animation-duration:
+    calc(var(--forest-period) / var(--forest-speed)),
+    calc(var(--forest-period) * 0.81 / var(--forest-speed));
+  animation-timing-function: linear;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor::before {
+  /* Narrow, pointed leaf. */
+  width: clamp(6px, 0.66vw, 9.6px);
+  height: clamp(16.8px, 1.92vw, 26.4px);
+  border-radius: 75% 0 75% 0;
+  --forest-color: 35, 72, 39;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor::after {
+  /* Shorter, rounded leaf with a slightly tapered base. */
+  width: clamp(9.6px, 1.08vw, 15.6px);
+  height: clamp(13.2px, 1.5vw, 21.6px);
+  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+  --forest-color: 30, 82, 54;
+}
+
+/* Three staggered sets of three leaves, each with its own path and clock. */
+:root[data-theme="magic-forest"] .ambient-effects__meteor:nth-child(1) {
+  left: 12%;
+  --forest-period: 18.2s;
+  --forest-delay: -3s;
+  --forest-wind: 1;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor:nth-child(1)::before {
+  --forest-offset: 18vw;
+  --forest-period: 24.5s;
+  --forest-delay: -16s;
+  --forest-wind: -0.8;
+  --forest-turn: -1;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor:nth-child(1)::after {
+  --forest-offset: -8vw;
+  --forest-period: 17.3s;
+  --forest-delay: -7s;
+  --forest-wind: 1.2;
+  --forest-turn: 1;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor:nth-child(2) {
+  left: 44%;
+  --forest-period: 21.8s;
+  --forest-delay: -12s;
+  --forest-wind: -1;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor:nth-child(2)::before {
+  --forest-offset: -14vw;
+  --forest-period: 26.4s;
+  --forest-delay: -5s;
+  --forest-wind: 1.4;
+  --forest-turn: 1;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor:nth-child(2)::after {
+  --forest-offset: 12vw;
+  --forest-period: 19.6s;
+  --forest-delay: -15s;
+  --forest-wind: -1.1;
+  --forest-turn: -1;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor:nth-child(3) {
+  left: 76%;
+  --forest-period: 16.4s;
+  --forest-delay: -8s;
+  --forest-wind: 0.8;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor:nth-child(3)::before {
+  --forest-offset: -12vw;
+  --forest-period: 20.9s;
+  --forest-delay: -17s;
+  --forest-wind: -1.3;
+  --forest-turn: -1;
+}
+
+:root[data-theme="magic-forest"] .ambient-effects__meteor:nth-child(3)::after {
+  --forest-offset: 10vw;
+  --forest-period: 23.6s;
+  --forest-delay: -11s;
+  --forest-wind: 0.7;
+  --forest-turn: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme="magic-forest"] .ambient-effects {
+    display: none;
+  }
 }

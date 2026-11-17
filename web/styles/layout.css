@@ -39,6 +39,29 @@ body.listening-page::before {
   content: "";
 }
 
+/* Ambient effects: fixed overlay behind .app, in front of background planes.
+   Each theme opts in by overriding display on .ambient-effects. */
+.ambient-effects {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  display: none;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-effects__meteor {
+  position: absolute;
+  display: block;
+}
+
+.ambient-effects__meteor::before,
+.ambient-effects__meteor::after {
+  position: absolute;
+  display: block;
+  content: "";
+}
+
 .living-wallpaper {
   position: absolute;
   inset: 0;

@@ -153,3 +153,36 @@ lyric/video canvas gradient colors, removing the previous navy tints and added
 glow. The legacy SVG remains at opacity 1 with no overlay. Its intrinsic artwork
 is unchanged. Control backgrounds, borders and the wallpaper video remain intact;
 other themes are unchanged. This supersedes the tinted-surface configuration above.
+
+
+## Follow-up: Magic Forest ambient leaves (2026-11-17)
+
+The completed CSS effect uses the existing three spans to render nine independent
+leaves. It adds no JavaScript, HTML, images or runtime dependencies. Starlight
+shooting stars and Quiet dust are still planned.
+
+Validation used temporary local HTML harnesses and headless Microsoft Edge;
+these harnesses were removed afterward. The checks do not establish results for
+other browsers or physical devices.
+
+- At desktop (1440x900) and mobile (390x844) window sizes, 891 computed X/Y samples
+  across all nine leaves matched their expected diagonal paths and constant
+  downward rates. Resets were transparent and beyond viewport bounds.
+- Leaf animation is scoped to Magic Forest; switching the harness to Quiet
+  removed its animation tracks. The layer ignores pointer input and remains
+  below the application UI.
+- After the final palette, opacity and size tuning, cleanup was compared against
+  a saved copy of the accepted stylesheet. All nine leaf renderings matched
+  exactly at 17 timestamps in both desktop and mobile browser harnesses. Compared
+  properties included colors, dimensions, border radii, shadows, translation,
+  rotation, opacity, placement and all animation clocks.
+- The same before/after comparison passed with reduced motion enabled: the layer
+  was hidden and had zero animation tracks.
+- `git diff --check` passed. These focused checks supplement the historical
+  migration record; the removed migration suite was not rerun.
+
+The three span leaves animate small box shadows and border radii, which require
+painting. Only the six pseudo-element leaves use transform/opacity motion. The
+original transform-only performance target was relaxed to keep all nine leaves
+independent without changing the three-span markup. No performance benchmark was
+run.

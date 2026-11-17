@@ -25,8 +25,9 @@ Each `themes/<id>/ui.css` owns that theme's public appearance properties,
 artwork URLs, wallpaper source/rate and theme-color value under
 `:root[data-theme="<id>"]`. Shared files contain only neutral defaults and
 geometry. Theme files may contain the small artwork selectors needed by that
-theme, but no media queries. All three existing palettes explicitly supply the
-complete appearance contract.
+theme, plus isolated ambient effects and their `prefers-reduced-motion` media
+queries. Layout breakpoints remain in shared responsive CSS. All three existing
+palettes explicitly supply the complete appearance contract.
 
 ## Shared custom property contract
 
@@ -148,23 +149,56 @@ provides the neutral artwork plane and video geometry.
   Forest video is stored with Git LFS; run
   `git lfs pull` after cloning to download it before serving the prototype.
   Visibility changes pause/resume that same video.
-- `.ambient-effects` and its meteor spans currently have no matching CSS. Their
-  markup is preserved, as are dormant component states and background helpers;
-  they were not assumed obsolete merely because the sample page doesn't use them.
+- `.ambient-effects` is a fixed, clipped, non-interactive layer at z-index 0,
+  after artwork and below `.app`. Shared layout hides it by default. Magic Forest
+  enables it; Starlight and Quiet ambient effects remain planned.
 
 The redundant Magic Forest `.app` z-index override, duplicate mobile sidebar
 width/implicit stretch, overwritten artwork declaration, duplicated section
 heading and repeated base flex-alignment declarations were removed. The invalid
 Magic Forest `color: var(--color-page)` (a gradient in a color property) simply
 inherited text color; shared inheritance now preserves that effective result.
-No artwork system, iframe or additional animation was introduced.
+No artwork system or iframe was introduced by the migration. Magic Forest ambient
+animation was added afterward, as described below.
+
+## Magic Forest ambient leaves
+
+The three existing `.ambient-effects__meteor` spans render nine independent
+leaves without JavaScript or markup changes. Each stationary span paints one
+leaf with an animated box shadow; its two pseudo-elements render the other two.
+Do not animate the span's transform or opacity: either would also move or fade
+its children. Three small shadows repaint; the other six leaves use `translate`,
+`rotate` and opacity animations.
+
+All leaves descend linearly from -12vh to 124vh, with horizontal displacement
+of `--forest-wind * 12vw`. Spawn offsets use `left`, separate from rotation.
+Leaves are transparent through 8% and after 92% of the fall, reaching full
+opacity from 18% to 82%. This keeps resets invisible and off screen.
+
+The theme stylesheet keeps these controls local to the effect:
+
+| Setting | Current behavior |
+| --- | --- |
+| `--forest-speed` | `0.75`; divides both periods and delays to preserve staggered phases |
+| `--forest-period`, `--forest-delay` | Independent clocks for each of the nine leaves |
+| `--forest-wind` | Signed horizontal drift; vertical descent stays constant |
+| `--forest-offset` | Pseudo-element spawn position relative to its stationary span |
+| `--forest-turn` | Pseudo-element rotation direction; full turns loop continuously |
+| `--forest-color` | Muted green RGB channels for each shape |
+
+The three silhouettes are the original asymmetric leaf, a narrow pointed leaf,
+and a shorter rounded leaf. Their dimensions are 1.2 times the initial sizes.
+Peak opacity is 100%; colors are RGB `(29, 77, 51)`, `(35, 72, 39)` and
+`(30, 82, 54)`. `prefers-reduced-motion: reduce` hides the entire layer and stops
+its animations. Other theme IDs never activate these rules.
 
 ## Validation
 
-See `VALIDATION.md` for the migration's historical evidence, limitations and file
-inventory. The temporary Python/Playwright validation harness has been removed.
-The remaining source-level check is:
+See `VALIDATION.md` for the migration's historical evidence, limitations, file
+inventory, and the later ambient-leaf validation. The temporary Python/Playwright
+validation harness has been removed. Remaining source-level checks are:
 
 ```sh
 node --check web/components/theme.js
+git diff --check
 ```

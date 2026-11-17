@@ -4,7 +4,7 @@ A self-hosted music listening-room prototype inspired by Spotify. The current re
 
 ## Current progress
 
-**Status as of 2026-11-16:** first complete theme and frontend prototype in active development.
+**Status as of 2026-11-17:** first complete theme and frontend prototype in active development.
 
 Implemented:
 
@@ -16,6 +16,8 @@ Implemented:
 - Theme-specific living wallpaper videos with visibility-aware pause/resume behavior.
 - Modular CSS with independent UI palettes and isolated legacy background rendering.
 - Completed Magic Forest palette, artwork and looping living-wallpaper montage.
+- Magic Forest ambient leaves: nine independent falling silhouettes, three shapes,
+  staggered motion, and reduced-motion support. See [`plan.md`](./plan.md).
 - Range-slider fill styling for player controls.
 - OpenAPI 3.1 contract for playlists, playlist tracks, and track audio streaming.
 
@@ -26,6 +28,8 @@ Not yet implemented:
 - Audio playback, queue, shuffle, repeat, seeking, and volume integration.
 - Authentication, persistence, and deployment configuration.
 - Final artwork assets referenced by some sample tracks.
+- **Starlight theme:** CSS ambient moving elements (shooting stars). See [`plan.md`](./plan.md).
+- **Quiet theme:** CSS ambient moving elements (floating dust particles). See [`plan.md`](./plan.md).
 
 ## Project structure
 
