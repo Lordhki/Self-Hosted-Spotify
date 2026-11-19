@@ -54,3 +54,149 @@
   --color-icon-subtle: #718b79;
   --color-icon-active: #bdda91;
 }
+
+/* Resolve artwork URLs here, beside the asset, rather than in shared layout CSS. */
+:root[data-theme="starlight"] body.listening-page::before {
+  background-image:
+    var(--background-artwork-overlay), var(--background-artwork);
+}
+
+/* ─── Ambient shooting stars ─────────────────────────────────────────────── */
+
+:root[data-theme="starlight"] .ambient-effects {
+  display: block;
+}
+
+/* Each span fires 3 shooting stars sequentially — position resets happen only
+   while the streak is fully transparent. Each star is active for ~11% of the
+   cycle with a ~22% dark pause between, so stars appear infrequently. */
+@keyframes starlight-shoot {
+  /* ── Star 1: active 0–11% ── */
+  0% {
+    transform: translate(0, 0) rotate(-42deg);
+    opacity: 0;
+  }
+  1% {
+    opacity: 0.45;
+  }
+  9% {
+    opacity: 0.35;
+  }
+  11% {
+    transform: translate(-40vw, 40vw) rotate(-42deg);
+    opacity: 0;
+  }
+  /* dark pause 11–33% — hold position, stay invisible */
+  32.9% {
+    transform: translate(-40vw, 40vw) rotate(-42deg);
+    opacity: 0;
+  }
+
+  /* ── Star 2: active 33–44% ── */
+  33% {
+    transform: translate(var(--star-offset-a), -4vh) rotate(-42deg);
+    opacity: 0;
+  }
+  34% {
+    opacity: 0.4;
+  }
+  42% {
+    opacity: 0.3;
+  }
+  44% {
+    transform: translate(calc(var(--star-offset-a) - 40vw), calc(-4vh + 40vw))
+      rotate(-42deg);
+    opacity: 0;
+  }
+  /* dark pause 44–66% */
+  65.9% {
+    transform: translate(calc(var(--star-offset-a) - 40vw), calc(-4vh + 40vw))
+      rotate(-42deg);
+    opacity: 0;
+  }
+
+  /* ── Star 3: active 66–77% ── */
+  66% {
+    transform: translate(var(--star-offset-b), -2vh) rotate(-42deg);
+    opacity: 0;
+  }
+  67% {
+    opacity: 0.42;
+  }
+  75% {
+    opacity: 0.32;
+  }
+  77% {
+    transform: translate(calc(var(--star-offset-b) - 40vw), calc(-2vh + 40vw))
+      rotate(-42deg);
+    opacity: 0;
+  }
+  /* dark pause 77–100% */
+  100% {
+    transform: translate(calc(var(--star-offset-b) - 40vw), calc(-2vh + 40vw))
+      rotate(-42deg);
+    opacity: 0;
+  }
+}
+
+/* Shooting star shape: short streak with a soft glowing head and a fading tail */
+:root[data-theme="starlight"] .ambient-effects__meteor {
+  top: 10%;
+  height: 2px;
+  border-radius: 999px;
+  /* Bright head on the left (leading edge), tail fades right */
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(210, 232, 255, 0.48) 20%,
+    rgba(160, 210, 255, 0.15) 55%,
+    rgba(125, 183, 255, 0) 100%
+  );
+  /* Soft glow around the streak */
+  box-shadow: 0 0 5px 1px rgba(125, 183, 255, 0.3);
+  animation: starlight-shoot linear infinite;
+  opacity: 0;
+}
+
+/* Pseudo-elements disabled — each span handles 3 sequential stars via keyframe thirds */
+:root[data-theme="starlight"] .ambient-effects__meteor::before,
+:root[data-theme="starlight"] .ambient-effects__meteor::after {
+  content: none;
+}
+
+/* ── Span 1: left sky ───────────────────────────────────────────────────── */
+:root[data-theme="starlight"] .ambient-effects__meteor:nth-child(1) {
+  --star-offset-a: 8vw;
+  --star-offset-b: -5vw;
+  left: 15%;
+  width: clamp(40px, 5vw, 75px);
+  animation-duration: 36s;
+  animation-delay: -2s;
+}
+
+/* ── Span 2: centre sky ─────────────────────────────────────────────────── */
+:root[data-theme="starlight"] .ambient-effects__meteor:nth-child(2) {
+  --star-offset-a: -10vw;
+  --star-offset-b: 12vw;
+  left: 50%;
+  width: clamp(30px, 4vw, 60px);
+  animation-duration: 46s;
+  animation-delay: -8s;
+}
+
+/* ── Span 3: right sky ──────────────────────────────────────────────────── */
+:root[data-theme="starlight"] .ambient-effects__meteor:nth-child(3) {
+  --star-offset-a: 6vw;
+  --star-offset-b: -8vw;
+  left: 72%;
+  width: clamp(35px, 4.5vw, 68px);
+  animation-duration: 28s;
+  animation-delay: -5s;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme="starlight"] .ambient-effects {
+    display: none;
+  }
+}

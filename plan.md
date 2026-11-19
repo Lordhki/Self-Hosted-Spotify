@@ -1,6 +1,6 @@
 # Ambient effects: implementation status and remaining plan
 
-Updated 2026-11-17.
+Updated 2026-11-19.
 
 ## Status
 
@@ -8,7 +8,8 @@ Updated 2026-11-17.
 | --- | --- | --- |
 | Shared layout | Fixed, clipped, non-interactive ambient plane below the UI | Complete |
 | Magic Forest | Nine independent falling leaves with three silhouettes | Complete and visually accepted |
-| Starlight | Shooting stars with diagonal streaks and fading tails | Planned |
+| Starlight artwork | Scattered stars, left glow and Leo constellation | Complete and visually accepted |
+| Starlight ambient layer | Shooting stars with diagonal streaks and fading tails | Implemented; full browser checks pending |
 | Quiet | Small dust motes drifting upward | Planned |
 
 ## Completed Magic Forest effect
@@ -39,14 +40,41 @@ lives in `web/styles/layout.css`. There are no HTML or JavaScript changes and no
 new visual assets. See [CSS architecture](web/styles/README.md) for tuning
 controls and [validation](web/styles/VALIDATION.md) for the completed checks.
 
+## Starlight artwork and shooting stars
+
+The accepted artwork lives in `web/themes/starlight/Starlight.svg`:
+
+- Left glow: internal fill opacity increased from 12.5% to 25%.
+- All 234 original scattered star points and their source attributes are preserved.
+  Reversible SVG style overrides set the smaller points to radius 0.75px at 65%
+  opacity and the larger points to radius 1.1px at 72% opacity.
+- Leo: a separate editable group with nine stars, thin connecting lines and a
+  faint blue glow. Glow opacity is 5% for the lines and 12% for the star halos.
+  The group moves up 20 SVG units and rotates 30 degrees counterclockwise around
+  its center at `(152.5, 727.5)`; the whole artwork scales with the viewport.
+
+The background URL fix keeps the `background-image` declaration in Starlight's
+`ui.css`, alongside the relative SVG URL. A URL stored in a custom property
+resolves against the consuming stylesheet; consuming it in shared `layout.css`
+incorrectly requested `/web/styles/Starlight.svg`. Shared layout still owns the
+artwork plane's geometry. Existing centered `100% auto` sizing remains: wide
+viewports crop the top and bottom of the SVG, and some edge glows are clipped
+inside the SVG itself.
+
+The Starlight ambient CSS reuses the existing three spans. Each span runs three
+sequential diagonal streaks per cycle, with invisible pauses and position resets.
+Cycle durations are 36s, 46s and 28s, with negative delays of 2s, 8s and 5s.
+The layer is hidden when reduced motion is requested. No HTML or JavaScript
+changes or additional assets are required.
+
+Validation: SVG parsing, unique IDs/filter references, preservation of the 234
+original star points, UTF-8 encoding and `git diff --check` passed. The user
+visually accepted the final artwork. Automated browser checks could not complete
+because the local headless browsers failed to launch reliably; desktop/mobile,
+theme switching, UI interaction, animation loops and reduced motion still need
+the full browser verification described below.
+
 ## Remaining effects
-
-### Starlight: shooting stars
-
-Use the existing ambient layer for thin diagonal streaks, with bright heads and
-fading tails in the Starlight palette. Stagger positions, durations and delays.
-Keep child paths independent: rotating a moving parent also rotates its child
-offsets and can send them in the wrong direction.
 
 ### Quiet: floating dust
 
@@ -55,7 +83,7 @@ horizontal movement. Keep opacity low and stagger the individual paths.
 
 For each effect, verify desktop/mobile rendering, theme switching, UI layering,
 pointer interaction, loop boundaries, and reduced-motion behavior before marking
-it complete. No Starlight or Quiet animation code has been added yet.
+it fully verified. Quiet animation code has not been added yet.
 
 ## Constraints and implementation notes
 

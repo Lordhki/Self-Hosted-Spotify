@@ -1,5 +1,12 @@
 <svg width="1440" height="960" viewBox="0 0 1440 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+  /* Reversible visibility overrides; original star geometry stays below. */
+  #starlight-starfield > circle[r="0.5"] { r: 0.75px; fill-opacity: 0.65; }
+  #starlight-starfield > circle[r="0.9"] { r: 1.1px; fill-opacity: 0.72; }
+</style>
 <g clip-path="url(#clip0_15_97)">
+<!-- Keep the original star positions intact; visibility is adjusted above. -->
+<g id="starlight-starfield">
 <circle cx="1003.7" cy="9.48" r="0.5" fill="#BFD9FF" fill-opacity="0.831373"/>
 <circle cx="111.8" cy="12.39" r="0.5" fill="#BFD9FF" fill-opacity="0.898039"/>
 <circle cx="370.1" cy="14.09" r="0.5" fill="#BFD9FF" fill-opacity="0.572549"/>
@@ -234,8 +241,9 @@
 <circle cx="1417" cy="950.1" r="0.5" fill="#BFD9FF" fill-opacity="0.54902"/>
 <circle cx="1073.7" cy="952.1" r="0.5" fill="#BFD9FF" fill-opacity="0.682353"/>
 <circle cx="1073.7" cy="952.1" r="0.5" fill="#BFD9FF" fill-opacity="0.682353"/>
+</g>
 <g filter="url(#filter0_f_15_97)">
-<circle cx="40" cy="130" r="70" fill="#4A7DB5" fill-opacity="0.12549"/>
+<circle cx="40" cy="130" r="70" fill="#4A7DB5" fill-opacity="0.25"/>
 </g>
 <g filter="url(#filter1_f_15_97)">
 <circle cx="44" cy="126" r="36" fill="url(#paint0_linear_15_97)"/>
@@ -281,8 +289,41 @@
 <path d="M763.183 870.317L790.03 854.817" stroke-linecap="round" stroke="#BFD9FF" stroke-opacity="0.141176"/>
 <path d="M793.676 856.793L819.282 870.408" stroke-linecap="round" stroke="#BFD9FF" stroke-opacity="0.141176"/>
 <path d="M821.062 870.704L806.278 888.323" stroke-linecap="round" stroke="#BFD9FF" stroke-opacity="0.141176"/>
+<!-- Decorative Leo: a sickle and rear triangle, inset from the cropped edges. -->
+<g id="starlight-leo" transform="translate(0 -20) rotate(-30 152.5 727.5)" stroke-linecap="round" stroke-linejoin="round">
+  <title>Leo constellation</title>
+  <path d="M210 660L236 678L240 705L218 732L208 761L211 795M218 732L118 706L65 750L125 770L118 706M125 770L211 795"
+    stroke="#7DB7FF" stroke-opacity="0.05" stroke-width="3" filter="url(#starlight-leo-glow)"/>
+  <path d="M210 660L236 678L240 705L218 732L208 761L211 795M218 732L118 706L65 750L125 770L118 706M125 770L211 795"
+    stroke="#BFD9FF" stroke-opacity="0.32" stroke-width="0.8"/>
+  <g fill="#7DB7FF" fill-opacity="0.12" filter="url(#starlight-leo-glow)">
+    <circle cx="210" cy="660" r="3"/>
+    <circle cx="236" cy="678" r="3"/>
+    <circle cx="240" cy="705" r="3"/>
+    <circle cx="218" cy="732" r="4"/>
+    <circle cx="208" cy="761" r="3"/>
+    <circle cx="211" cy="795" r="5"/>
+    <circle cx="118" cy="706" r="3"/>
+    <circle cx="65" cy="750" r="4"/>
+    <circle cx="125" cy="770" r="3"/>
+  </g>
+  <g fill="#DCEBFF" fill-opacity="0.85">
+    <circle cx="210" cy="660" r="1.3"/>
+    <circle cx="236" cy="678" r="1.4"/>
+    <circle cx="240" cy="705" r="1.4"/>
+    <circle cx="218" cy="732" r="1.9"/>
+    <circle cx="208" cy="761" r="1.4"/>
+    <circle cx="211" cy="795" r="2.3"/>
+    <circle cx="118" cy="706" r="1.6"/>
+    <circle cx="65" cy="750" r="2"/>
+    <circle cx="125" cy="770" r="1.5"/>
+  </g>
+</g>
 </g>
 <defs>
+<filter id="starlight-leo-glow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+  <feGaussianBlur stdDeviation="2.5"/>
+</filter>
 <filter id="filter0_f_15_97" x="-50" y="40" width="180" height="180" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>

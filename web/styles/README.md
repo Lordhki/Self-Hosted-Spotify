@@ -138,7 +138,12 @@ provides the neutral artwork plane and video geometry.
   per-theme values and URLs live in each theme's `ui.css`.
 - Artwork assets remain at `themes/starlight/Starlight.svg` and
   `themes/magic-forest/MagicForest.jpg`. CSS URLs stay relative to each theme
-  stylesheet. Magic Forest's sidebar uses the original
+  stylesheet. Declarations that consume artwork URLs (including through `var()`)
+  must stay in that same theme stylesheet: relative URLs in custom properties
+  resolve against the consuming declaration's stylesheet, not the variable's.
+  Shared layout owns the body artwork plane's geometry; Starlight sets its
+  `background-image` in `themes/starlight/ui.css`. Magic Forest's sidebar uses
+  the original
   `background-size: 100vw 100vh`, including its existing mobile/scroll behavior.
 - `.wallpaper-layer` and its cover-sized video keep the original geometry. One
   persistent muted, looping, inline video switches sources without replacing the
@@ -151,7 +156,8 @@ provides the neutral artwork plane and video geometry.
   Visibility changes pause/resume that same video.
 - `.ambient-effects` is a fixed, clipped, non-interactive layer at z-index 0,
   after artwork and below `.app`. Shared layout hides it by default. Magic Forest
-  enables it; Starlight and Quiet ambient effects remain planned.
+  and Starlight enable it; Quiet ambient effects remain planned. Starlight uses
+  sequential shooting-star streaks and hides the layer for reduced motion.
 
 The redundant Magic Forest `.app` z-index override, duplicate mobile sidebar
 width/implicit stretch, overwritten artwork declaration, duplicated section
